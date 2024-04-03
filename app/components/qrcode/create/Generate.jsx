@@ -11,7 +11,7 @@ const Generate = () => {
 
     return (
         <InlineStack blockAlign='right' align='right'>
-            <Button variant='primary' tone='success' size='large' submit={true} >
+            <Button variant='primary' tone='success' size='large' submit={true} disabled={isSaving} >
                 {isSaving ? 'Generating...' : 'Generate'}</Button>
         </InlineStack>
     )

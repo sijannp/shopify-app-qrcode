@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import SelectType from '../components/qrcode/types/SelectType'
-import { BlockStack, Grid, Page } from '@shopify/polaris'
+import { BlockStack, Box, Button, Grid, Icon, InlineStack, Page, Text } from '@shopify/polaris'
 import { authenticate } from '../shopify.server';
 import { json } from '@remix-run/node';
 import { Form, redirect, useNavigation } from '@remix-run/react';
@@ -13,6 +13,7 @@ import { getQRCode, validateQRCode } from '../models/QRCode.server';
 import db from '../db.server'
 import Design from '../components/qrcode/create/Design';
 
+import { PlusIcon } from '@shopify/polaris-icons';
 export async function loader({ request }) {
   const { session } = await authenticate.admin(request);
   return json({ shop: session.shop })
@@ -70,9 +71,14 @@ const Create = () => {
     <Page>
       {selectedType ?
         <BlockStack gap={400}>
+          <Button size='large' tone='critical' variant='monochromePlain'>
+            <InlineStack align='center' blockAlign='center'>
+
+            </InlineStack>
+          </Button>
           <Type type={selectedType} setType={setSelectedType} />
           <Grid>
-            <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 7, xl: 7 }}>
+            <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 7, xl: 8 }}>
               <Form method='post' >
                 <BlockStack gap={400}>
                   <Target type={selectedType} />
@@ -82,7 +88,7 @@ const Create = () => {
                 </BlockStack>
               </Form>
             </Grid.Cell>
-            <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 5, xl: 5 }} >
+            <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 5, xl: 4 }} >
               <Output type={selectedType} />
             </Grid.Cell>
           </Grid>
