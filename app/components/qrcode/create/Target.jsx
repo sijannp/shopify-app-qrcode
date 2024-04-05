@@ -1,11 +1,7 @@
 import { useActionData, useLoaderData } from '@remix-run/react'
-import { BlockStack, Button, Card, Icon, InlineError, InlineStack, Link, Text, TextField, Thumbnail } from '@shopify/polaris'
+import { BlockStack, Button, Card, InlineError, InlineStack, Link, Text, TextField, Thumbnail } from '@shopify/polaris'
 import React, { useState } from 'react'
 import { ImageIcon } from "@shopify/polaris-icons";
-
-import {
-    ExternalIcon
-} from '@shopify/polaris-icons';
 
 const Target = ({ type }) => {
 
@@ -16,9 +12,9 @@ const Target = ({ type }) => {
         <Card>
             <BlockStack gap={400}>
                 <InlineStack blockAlign='center' align='space-between'>
-                    <Text as='span' variant='headingMd' >TARGET</Text>
+                    <Text as='span' variant='headingMd' >Target</Text>
                     <InlineStack>
-                        <TextField name='type' value={type} type='text' readOnly autoSize />
+                        <TextField name='type' value={type.value} type='text' readOnly autoSize />
                     </InlineStack>
                 </InlineStack>
                 <ReturnTarget type={type} />
@@ -51,6 +47,8 @@ const ReturnTarget = ({ type }) => {
             // customized action verb, either 'select' or 'add',
         });
 
+        console.log(collections);
+
         if (collections) {
             console.log(collections[0])
             const { id, title, handle, image } = collections[0];
@@ -70,6 +68,7 @@ const ReturnTarget = ({ type }) => {
         const products = await window.shopify.resourcePicker({
             type: "product",
             action: "select",
+            multiple: false
             // customized action verb, either 'select' or 'add',
         });
 
@@ -89,7 +88,7 @@ const ReturnTarget = ({ type }) => {
         }
     }
 
-    switch (type) {
+    switch (type.value) {
         case 'homepage':
             return (
 
@@ -129,7 +128,9 @@ const ReturnTarget = ({ type }) => {
                             Change product
                         </Button>
                     ) : null}
-                    <TextField name='target' value={`${formState?.productHandle}/${formState?.productVariantId ? '?variant=' + formState?.productVariantId : ''}`} type='text' readOnly />
+                    {formState?.productHandle &&
+                        <TextField name='target' value={formState?.productHandle} type='text' readOnly />
+                    }
                 </BlockStack>
 
             )

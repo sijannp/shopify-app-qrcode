@@ -1,4 +1,7 @@
 import { Avatar, BlockStack, Box, Button, ButtonGroup, Card, Icon, InlineStack, Select, Text } from '@shopify/polaris'
+import {
+    ArrowDownIcon, DeleteIcon
+} from '@shopify/polaris-icons';
 import React, { useCallback, useRef, useState } from 'react'
 import QRCExample from '../../../assets/img/QRCExample.svg'
 import { useActionData } from '@remix-run/react';
@@ -23,10 +26,10 @@ const Output = () => {
         { label: 'Large', value: 'large' },
     ]
 
-    const options = [
-        { label: 'Today', value: 'today' },
-        { label: 'Yesterday', value: 'yesterday' },
-        { label: 'Last 7 days', value: 'lastWeek' },
+    const typeOptions = [
+        { label: 'PNG', value: 'png' },
+        { label: 'SVG', value: 'svg' },
+        { label: 'JPG', value: 'jpg' },
     ];
 
     const qrCode = useActionData()?.qrCode || null;
@@ -61,8 +64,8 @@ const Output = () => {
 
                     />
                     <Select
-                        label="Date range"
-                        options={options}
+                        label="Type"
+                        options={typeOptions}
                         onChange={handleSelectChange}
                         value={selected}
                     />
@@ -81,8 +84,8 @@ const Output = () => {
                 </ui-modal>
 
                 <ButtonGroup fullWidth>
-                    <Button variant="primary" tone='success'>Download</Button>
-                    <Button tone='critical' variant='primary' onClick={handleShowModal}>Delete</Button>
+                    <Button variant="primary" tone='success' icon={ArrowDownIcon} size='large'>Download</Button>
+                    <Button tone='critical' variant='primary' onClick={handleShowModal} icon={DeleteIcon} size='large'>Delete</Button>
                 </ButtonGroup>
             </BlockStack>
 
