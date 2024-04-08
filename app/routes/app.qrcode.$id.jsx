@@ -5,6 +5,7 @@ import { useLoaderData } from "@remix-run/react";
 import db from "../db.server";
 import { getQRCodeImage } from "../models/QRCode.server";
 import { Avatar, Button, Card, InlineStack, Page, Text } from "@shopify/polaris";
+import ViewQrCode from "../components/qrcode/view/ViewQrCode";
 
 
 export const loader = async ({ params }) => {
@@ -13,31 +14,44 @@ export const loader = async ({ params }) => {
     const id = Number(params.id);
     const qrCode = await db.qRCode.findFirst({ where: { id } });
 
+
+    const scansData = await db.scans.findMany({
+        where: {
+            qrcodeId: id,
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+    });
+
+
+
     invariant(qrCode, "Could not find QR code destination");
 
     return json({
-        title: qrCode.title,
+        qrCode: {
+            title: qrCode.title,
+            type: qrCode.type,
+            settings: qrCode.settings,
+            target: qrCode.target,
+            scans: {
+                total: qrCode.scans,
+                unique: null,
+                lastScan: scansData[0]?.createdAt,
+                data: scansData
 
-        image: await getQRCodeImage(id),
+            },
+            image: await getQRCodeImage(id),
+        }
     });
 };
 
 export default function QRCode() {
-    const { image, title } = useLoaderData();
+    const { qrCode } = useLoaderData();
 
     return (
         <Page>
-            <InlineStack align="space-between" blockAlign="center">
-                <Text as="h2" variant="headingLg">QR Code</Text>
-                <Button variant="primary" tone="success" size="large" url="/app/create"> Create New </Button>
-
-
-            </InlineStack>
-            <Card>
-                <Text as="h1" variant="display">QR Code</Text>
-                <Text as="h2" variant="headingLg" >{title}</Text>
-                s                <img src={image} alt={title} />
-            </Card>
+            <ViewQrCode qrcode={qrCode} />
         </Page>
     );
 }

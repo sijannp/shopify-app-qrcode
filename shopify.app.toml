@@ -3,7 +3,7 @@
 client_id = "66a501c47dd429e1c9f7ef7c13e0ccdc"
 name = "qr-generator"
 handle = "qr-generator-14"
-application_url = "https://challenging-susan-nam-usa.trycloudflare.com"
+application_url = "https://notebooks-alike-operates-descending.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://challenging-susan-nam-usa.trycloudflare.com/auth/callback",
-  "https://challenging-susan-nam-usa.trycloudflare.com/auth/shopify/callback",
-  "https://challenging-susan-nam-usa.trycloudflare.com/api/auth/callback"
+  "https://notebooks-alike-operates-descending.trycloudflare.com/auth/callback",
+  "https://notebooks-alike-operates-descending.trycloudflare.com/auth/shopify/callback",
+  "https://notebooks-alike-operates-descending.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

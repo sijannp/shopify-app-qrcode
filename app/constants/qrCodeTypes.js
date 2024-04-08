@@ -1,5 +1,5 @@
 import {
-    HomeIcon, ProductIcon, CollectionIcon, LinkIcon, TextIcon, EmailIcon, LocationIcon, PhoneIcon, TextIcon as SmsIcon, ChatIcon, WifiIcon
+    HomeIcon, ProductIcon, CollectionIcon, LinkIcon, TextIcon, EmailIcon, LocationIcon, PhoneIcon, TextIcon as SmsIcon, ChatIcon, WifiIcon, PageIcon
 } from '@shopify/polaris-icons';
 
 export const qrCodeTypes = [
@@ -9,6 +9,7 @@ export const qrCodeTypes = [
             { label: 'Homepage', value: 'homepage', icon: HomeIcon },
             { label: 'Product', value: 'product', icon: ProductIcon },
             { label: 'Collection', value: 'collection', icon: CollectionIcon },
+            { label: 'Page', value: 'page', icon: PageIcon }
 
         ]
     },

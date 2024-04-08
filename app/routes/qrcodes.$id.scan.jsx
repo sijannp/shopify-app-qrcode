@@ -29,11 +29,24 @@ export const loader = async ({ params, request }) => {
     // [END increment]
 
 
-    const userAgent = request.headers.get('user-agent');
+    let browser = request.headers.get('sec-ch-ua')
+
+    browser = browser ? browser.split(';')[0]?.replace(/"/g, "") : 'Unknown';
+
+    const platform = request.headers.get('sec-ch-ua-platform')?.replace(/"/g, "") || 'Unknown';
+
+    const ipAddress = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for') || request.connection.remoteAddress || 'Unknown';
+
+
+    const country = request.headers.get('cf-ipcountry') || 'Unknown';
+
 
     const scanData = {
         qrcodeId: id,
-        browser: userAgent ? userAgent : 'Unknown',
+        browser,
+        ipAddress,
+        country,
+        platform
     };
 
     // Save scan data to Scans table
