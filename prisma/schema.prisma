@@ -25,11 +25,23 @@ model Session {
 }
 
 model QRCode {
-  id               Int      @id @default(autoincrement())
-  title            String
-  shop             String
-  type             String
-  target           String
-  scans            Int      @default(0)
-  createdAt        DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  title     String
+  shop      String
+  type      String
+  target    String
+  scans     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Scans {
+  id        Int      @id @default(autoincrement())
+  qrcodeId  Int
+  country   String?
+  region    String?
+  city      String?
+  browser   String?
+  platform  String?
+  ipAddress String?
+  createdAt DateTime @default(now())
 }

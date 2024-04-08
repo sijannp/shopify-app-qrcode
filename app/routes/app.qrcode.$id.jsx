@@ -17,6 +17,7 @@ export const loader = async ({ params }) => {
 
     return json({
         title: qrCode.title,
+
         image: await getQRCodeImage(id),
     });
 };
@@ -35,7 +36,7 @@ export default function QRCode() {
             <Card>
                 <Text as="h1" variant="display">QR Code</Text>
                 <Text as="h2" variant="headingLg" >{title}</Text>
-                {/* <Avatar size="large" source={image} /> */}
+                s                <img src={image} alt={title} />
             </Card>
         </Page>
     );

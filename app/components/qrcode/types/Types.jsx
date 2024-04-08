@@ -8,7 +8,6 @@ const Types = ({ category, setType }) => {
             <BlockStack gap={400}>
                 <Text as='h2' variant='headingMd'>{title}</Text>
                 <Grid>
-
                     {
                         options.map((option) => (
                             <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 2, lg: 4, xl: 3 }}>

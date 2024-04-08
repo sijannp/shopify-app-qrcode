@@ -4,7 +4,10 @@ import db from "../db.server";
 
 import { getDestinationUrl } from "../models/QRCode.server";
 
-export const loader = async ({ params }) => {
+export const loader = async ({ params, request }) => {
+
+
+    console.log(request.headers, '---request.headers--------------');
     // [START validate]
 
     invariant(params.id, "Could not find QR code destination");
@@ -24,6 +27,21 @@ export const loader = async ({ params }) => {
         data: { scans: { increment: 1 } },
     });
     // [END increment]
+
+
+    const userAgent = request.headers.get('user-agent');
+
+    const scanData = {
+        qrcodeId: id,
+        browser: userAgent ? userAgent : 'Unknown',
+    };
+
+    // Save scan data to Scans table
+    await db.scans.create({
+        data: scanData,
+    });
+
+
 
     // [START redirect]
     return redirect(getDestinationUrl(qrCode));

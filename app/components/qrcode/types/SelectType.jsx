@@ -7,8 +7,8 @@ const SelectType = ({ setType }) => {
     return (
         <Page>
 
-            <BlockStack gap={800}>
-                <Text alignment='center' as="h1" variant='headingLg'>Select the type of QR Code you want to create</Text>
+            <BlockStack gap={400}>
+                <Text as="h1" variant='bodyLg'>Select the type of QR Code you want to create</Text>
 
 
                 {qrCodeTypes.map((category) => (

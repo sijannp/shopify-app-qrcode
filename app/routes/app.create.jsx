@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import SelectType from '../components/qrcode/types/SelectType'
-import { BlockStack, Box, Button, Grid, Icon, InlineStack, Page, Text } from '@shopify/polaris'
+import { BlockStack, Box, Button, Divider, Grid, Icon, InlineStack, Page, Text } from '@shopify/polaris'
 import { authenticate } from '../shopify.server';
 import { json } from '@remix-run/node';
 import { Form, redirect, useNavigation } from '@remix-run/react';
@@ -69,34 +69,44 @@ const Create = () => {
 
   return (
     <Page>
-      {selectedType ?
-        <BlockStack gap={400}>
-          <Button size='large' tone='critical' variant='monochromePlain'>
-            <InlineStack align='center' blockAlign='center'>
+      <BlockStack gap={400}>
+        <InlineStack align='space-between' blockAlign='center'>
+          <Text as='h2' variant='headingLg'>Home {'>'} Create</Text>
+          <Button size='large' url='/app' loading={isSaving} disabled={isSaving} > Back </Button>
+        </InlineStack>
+        <Divider borderWidth='050' />
+      </BlockStack>
+      {
+        selectedType ?
+          <Form method='post' >
+            <BlockStack gap={400}>
+              <Button size='large' tone='critical' variant='monochromePlain'>
+                <InlineStack align='center' blockAlign='center'>
 
-            </InlineStack>
-          </Button>
-          <Type type={selectedType} setType={setSelectedType} />
-          <Grid>
-            <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 7, xl: 8 }}>
-              <Form method='post' >
-                <BlockStack gap={400}>
-                  <Target type={selectedType} />
-                  <Settings />
-                  <Design />
-                  <Generate />
-                </BlockStack>
-              </Form>
-            </Grid.Cell>
-            <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 5, xl: 4 }} >
-              <Output type={selectedType} />
-            </Grid.Cell>
-          </Grid>
-        </BlockStack>
+                </InlineStack>
+              </Button>
+              <Type type={selectedType} setType={setSelectedType} />
+              <Grid>
+                <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 4, lg: 8, xl: 8 }}>
+
+                  <BlockStack gap={400}>
+                    <Target type={selectedType} />
+                    <Settings />
+                    <Design />
+                    {/* <Generate /> */}
+                  </BlockStack>
+                </Grid.Cell>
+                <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 2, lg: 4, xl: 4 }} >
+                  <Output type={selectedType} />
+                </Grid.Cell>
+              </Grid>
+            </BlockStack>
+          </Form>
 
 
-        : <SelectType setType={setSelectedType} />}
-    </Page>
+          : <SelectType setType={setSelectedType} />
+      }
+    </Page >
   )
 }
 

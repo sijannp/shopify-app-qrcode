@@ -1,14 +1,21 @@
 import { Avatar, BlockStack, Box, Button, ButtonGroup, Card, Icon, InlineStack, Select, Text } from '@shopify/polaris'
 import {
-    ArrowDownIcon, DeleteIcon
+    ArrowDownIcon, MagicIcon
 } from '@shopify/polaris-icons';
 import React, { useCallback, useRef, useState } from 'react'
 import QRCExample from '../../../assets/img/QRCExample.svg'
-import { useActionData } from '@remix-run/react';
+import { useActionData, useNavigation } from '@remix-run/react';
 
 const Output = () => {
     const [selected, setSelected] = useState('today');
     const [selectedSize, setSelectedSize] = useState('small');
+
+
+    const nav = useNavigation();
+    const isSaving =
+        nav.state === "submitting";
+
+    const errors = useActionData()?.errors || {};
 
     const handleSelectChange = useCallback(
         (value) => setSelected(value),
@@ -48,6 +55,8 @@ const Output = () => {
         }
     };
 
+
+
     return (
         <Card>
             <BlockStack gap={600}>
@@ -84,8 +93,11 @@ const Output = () => {
                 </ui-modal>
 
                 <ButtonGroup fullWidth>
-                    <Button variant="primary" tone='success' icon={ArrowDownIcon} size='large'>Download</Button>
-                    <Button tone='critical' variant='primary' onClick={handleShowModal} icon={DeleteIcon} size='large'>Delete</Button>
+                    <Button variant="primary" tone='success' icon={MagicIcon} size='large' submit={true} disabled={isSaving}>
+                        {isSaving ? 'Generating...' : 'Generate'}
+                    </Button>
+                    <Button icon={ArrowDownIcon} size='large' disabled={!qrCode}>Download</Button>
+                    {/* <Button tone='critical' variant='primary' onClick={handleShowModal} icon={DeleteIcon} size='large'>Delete</Button> */}
                 </ButtonGroup>
             </BlockStack>
 

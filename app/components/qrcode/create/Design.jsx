@@ -42,7 +42,7 @@ const Design = () => {
 
 
             <BlockStack gap={400}>
-                <Text variant='headingMd'> DESIGN</Text>
+                <Text variant='headingMd'> Design</Text>
                 <Popover
                     active={popoverActive}
                     activator={activator}

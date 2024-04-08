@@ -117,7 +117,7 @@ const ReturnTarget = ({ type }) => {
                         </InlineStack>
                     ) : (
                         <BlockStack gap="200">
-                            <Button onClick={selectProduct} id="select-product">
+                            <Button onClick={selectProduct} id="select-product" size='large'>
                                 Select product
                             </Button>
 
