@@ -8,6 +8,7 @@ import { useActionData, useLoaderData } from '@remix-run/react';
 import { getQRCode } from '../models/QRCode.server';
 import QrCodeTable from '../components/home/QrCodeTable';
 import Header from '../components/home/Header';
+import ScansData from '../components/home/ScansData';
 
 export async function loader({ request }) {
 
@@ -71,6 +72,7 @@ const Index = () => {
           <Header />
 
           <QrCodeTable qrCodes={qrCodes} />
+          <ScansData />
         </BlockStack>
 
       }

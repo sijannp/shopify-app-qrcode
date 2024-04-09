@@ -21,7 +21,6 @@ export async function loader({ request }) {
 
 
 export async function action({ request, params }) {
-  console.log('Submitting...')
 
   const { session, admin } = await authenticate.admin(request);
 

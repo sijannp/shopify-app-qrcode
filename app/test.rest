@@ -1,0 +1,31 @@
+POST https://app.qodevault.com/api/qrqode/create
+Content-Type: multipart/form-data
+
+{
+    "backcolor": "#FFFFFF",
+    "frontcolor": "#000000",
+    "gradient_color": "#000000",
+    "pattern": "default",
+    "marker": "default",
+    "marker_in": "default",
+    "marker_out_color": "#000000",
+    "marker_in_color": "#000000",
+    "marker_top_right_outline": "#000000",
+    "marker_top_right_center": "#000000",
+    "marker_bottom_left_outline": "#000000",
+    "marker_bottom_left_center": "#000000",
+    "optionlogo": "none",
+    "no_logo_bg": "",
+    "outer_frame": "none",
+    "framelabel": "SCAN ME",
+    "label_font": "Arial, Helvetica, sans-serif",
+    "framecolor": "#000000",
+    "size": 24,
+    "level": "M",
+    "imagePreview": "",
+    "link": "http://",
+    "section": "#link",
+    "title": "aa",
+    "dynamic": true,
+    "is_editing": false
+}

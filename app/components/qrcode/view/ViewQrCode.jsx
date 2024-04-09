@@ -1,4 +1,4 @@
-import { Avatar, BlockStack, Card, DataTable, Divider, Grid, InlineGrid, InlineStack, Page, Text } from '@shopify/polaris'
+import { Avatar, BlockStack, Button, Card, DataTable, Divider, Grid, InlineGrid, InlineStack, Page, Text } from '@shopify/polaris'
 import React from 'react'
 
 const ViewQrCode = ({ qrcode }) => {
@@ -7,10 +7,8 @@ const ViewQrCode = ({ qrcode }) => {
             <BlockStack gap={400}>
                 <InlineStack blockAlign='center' align='space-between'>
                     <Text as='span' variant='headingMd' >QR Code</Text>
-                    <InlineStack>
-                        {/* <Avatar size="small" name={qrcode.title} /> */}
+                    <Button url='/app/' > Back </Button>
 
-                    </InlineStack>
                 </InlineStack>
                 <Divider />
                 <Grid>

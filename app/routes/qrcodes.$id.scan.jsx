@@ -36,8 +36,6 @@ export const loader = async ({ params, request }) => {
     const platform = request.headers.get('sec-ch-ua-platform')?.replace(/"/g, "") || 'Unknown';
 
     const ipAddress = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for') || request.connection.remoteAddress || 'Unknown';
-
-
     const country = request.headers.get('cf-ipcountry') || 'Unknown';
 
 

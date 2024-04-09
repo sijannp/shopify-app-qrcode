@@ -1,5 +1,8 @@
-import { BlockStack, Button, Card, ColorPicker, InlineStack, LegacyCard, Modal, Popover, Text } from '@shopify/polaris'
+import { BlockStack, Button, Card, ColorPicker, InlineGrid, InlineStack, LegacyCard, Modal, Popover, Text } from '@shopify/polaris'
 import React, { useCallback, useState } from 'react'
+import Pattern from './design/Pattern';
+import Marker from './design/Marker';
+import CenterDotStyle from './design/CenterDotStyle';
 
 const Design = () => {
 
@@ -30,19 +33,16 @@ const Design = () => {
 
 
 
-
-
     return (
         <Card>
-            <Modal>
-                <Modal.Section>
-                    <Text>Modal</Text>
-                </Modal.Section>
-            </Modal>
-
 
             <BlockStack gap={400}>
                 <Text variant='headingMd'> Design</Text>
+                <Pattern />
+                <InlineGrid columns={2} gap={200} >
+                    <Marker />
+                    <CenterDotStyle />
+                </InlineGrid>
                 <Popover
                     active={popoverActive}
                     activator={activator}
