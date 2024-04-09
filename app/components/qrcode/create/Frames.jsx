@@ -1,11 +1,14 @@
 import React, { useCallback, useState } from 'react'
-import { centerDotStyles } from '../../../../constants/center-dot-styles';
-import { Card, BlockStack, Text, Avatar, InlineStack, Button, Divider, TextField, Popover, Box } from '@shopify/polaris'
+import { Card, BlockStack, Text, Avatar, InlineStack, Button, Collapsible, Divider, TextField, Popover } from '@shopify/polaris'
+import { frames } from '../../../constants/frames';
 
-const CenterDotStyle = () => {
+
+const Frames = () => {
     const [open, setOpen] = useState(false);
 
-    const [selectedCenterDotStyle, setSelectedCenterDotStyle] = useState(centerDotStyles[0])
+    const [selectedFrame, setSelectedFrame] = useState(frames[0])
+
+
     const [popoverActive, setPopoverActive] = useState(false);
 
     const togglePopoverActive = useCallback(
@@ -17,25 +20,29 @@ const CenterDotStyle = () => {
         <Button
             textAlign='start'
             fullWidth
+
             onClick={togglePopoverActive}
             ariaExpanded={open}
             ariaControls="basic-collapsible"
             variant='tertiary'
         >
 
-            <InlineStack style={{ gap: '1000px' }} gap={400} blockAlign='center'>
+            <InlineStack gap={400} blockAlign='center'>
 
                 <Card>
-                    <Avatar source={selectedCenterDotStyle.icon} size='lg' />
+                    <Avatar source={selectedFrame.icon} size='lg' />
                 </Card>
-                <TextField name='marker_in' value={selectedCenterDotStyle.value} readOnly autoSize align='right' />
+                <TextField name='pattern' value={selectedFrame.value} readOnly autoSize align='right' />
             </InlineStack>
         </Button>
     );
+
+
+
     return (
-        <>
-            <BlockStack gap={400}>
-                <Text variant='bodyMd'>Center Dot Style</Text>
+        <Card>
+            <BlockStack gap={400}>   <Text variant='headingMd'>Frame</Text>
+
                 <Popover
                     active={popoverActive}
                     activator={activator}
@@ -45,24 +52,24 @@ const CenterDotStyle = () => {
                     <Card>
                         <InlineStack wrap={true} gap={600} align='center'>
 
-                            {centerDotStyles.map((centerDotStyle) => (
-                                <Button tone='success' variant={`${selectedCenterDotStyle.value == centerDotStyle.value ? 'plain' : 'monochromePlain'}`} key={centerDotStyle.id} onClick={() => { setSelectedCenterDotStyle(centerDotStyle); setOpen(false) }}>
-                                    <Card key={centerDotStyle.id}>
+                            {frames.map((frame) => (
+                                <Button tone='success' variant={`${selectedFrame.value == frame.value ? 'plain' : 'monochromePlain'}`} key={frame.id} onClick={() => { setSelectedFrame(frame); setOpen(false) }}>
+                                    <Card key={frame.id}>
                                         <BlockStack gap={400}>
-                                            <Avatar source={centerDotStyle.icon} size='xs' />
+                                            <img style={{ width: '40px', height: 'auto' }} src={frame.icon} />
                                         </BlockStack>
                                     </Card>
                                 </Button>
-                            ))}
-
+                            ))
+                            }
                         </InlineStack>
                     </Card>
                 </Popover>
                 <Divider borderWidth='050' />
             </BlockStack>
-        </>
+        </Card>
 
     )
 }
 
-export default CenterDotStyle
+export default Frames

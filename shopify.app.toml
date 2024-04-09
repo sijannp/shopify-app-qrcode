@@ -3,7 +3,7 @@
 client_id = "66a501c47dd429e1c9f7ef7c13e0ccdc"
 name = "qr-generator"
 handle = "qr-generator-14"
-application_url = "https://planned-empty-increases-un.trycloudflare.com"
+application_url = "https://viewers-officers-tells-romania.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://planned-empty-increases-un.trycloudflare.com/auth/callback",
-  "https://planned-empty-increases-un.trycloudflare.com/auth/shopify/callback",
-  "https://planned-empty-increases-un.trycloudflare.com/api/auth/callback"
+  "https://viewers-officers-tells-romania.trycloudflare.com/auth/callback",
+  "https://viewers-officers-tells-romania.trycloudflare.com/auth/shopify/callback",
+  "https://viewers-officers-tells-romania.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

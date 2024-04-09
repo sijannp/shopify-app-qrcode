@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { borderTypes } from '../../../../constants/border-types'
 import { Card, BlockStack, Text, Avatar, InlineStack, Button, Collapsible, Divider, TextField, Popover } from '@shopify/polaris'
+import CustomMarker from './CustomMarker';
 
 const Marker = () => {
     const [open, setOpen] = useState(false);
@@ -17,29 +18,28 @@ const Marker = () => {
     );
 
     const activator = (
-        <Card>
-            <Button
-                textAlign='start'
-                fullWidth
-                onClick={togglePopoverActive}
-                ariaExpanded={open}
-                ariaControls="basic-collapsible"
-                variant='tertiary'
-            >
+        <Button
+            textAlign='start'
+            fullWidth
+            onClick={togglePopoverActive}
+            ariaExpanded={open}
+            ariaControls="basic-collapsible"
+            variant='tertiary'
+        >
 
-                <InlineStack gap={400} blockAlign='center'>
+            <InlineStack gap={400} blockAlign='center'>
 
-                    <Card>
-                        <Avatar source={selectedBorderType.icon} size='lg' />
-                    </Card>
-                    <TextField name='marker' value={selectedBorderType.value} readOnly autoSize align='right' />
-                </InlineStack>
-            </Button>
-        </Card>
+                <Card>
+                    <Avatar source={selectedBorderType.icon} size='lg' />
+                </Card>
+                <TextField name='marker' value={selectedBorderType.value} readOnly autoSize align='right' />
+            </InlineStack>
+        </Button>
     );
     return (
         <>
-            <BlockStack gap={400}>   <Text as='h2' variant='headingMd'>Border type</Text>
+            <BlockStack gap={400}>
+                <Text variant='bodyMd'>Border type</Text>
 
                 <Popover
                     active={popoverActive}

@@ -59,6 +59,8 @@ const Settings = ({ title = '' }) => {
                         requiredIndicator
 
                     />
+                    <input type='hidden' name='dynamic' value={true} />
+                    <input type='hidden' name='is_editing' value={true} />
                     <InlineStack align='space-between' blockAlign='center'>
                         <Text> Expiry Date </Text>
                         {selectedDate && <Button tone='critical' variant='plain' onClick={() => { setSelectedDate(null) }} > Reset</Button>}

@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import SelectType from '../components/qrcode/types/SelectType'
-import { BlockStack, Box, Button, Divider, Grid, Icon, InlineStack, Page, Text } from '@shopify/polaris'
+import { BlockStack, Button, Divider, Grid, InlineStack, Page, Text } from '@shopify/polaris'
 import { authenticate } from '../shopify.server';
 import { json } from '@remix-run/node';
-import { Form, redirect, useNavigation } from '@remix-run/react';
+import { Form, redirect, useActionData, useNavigation } from '@remix-run/react';
 import Target from '../components/qrcode/create/Target';
 import Settings from '../components/qrcode/create/Settings';
-import Generate from '../components/qrcode/create/Generate';
 import Output from '../components/qrcode/create/Output';
 import Type from '../components/qrcode/create/Type';
-import { getQRCode, validateQRCode } from '../models/QRCode.server';
-import db from '../db.server'
 import Design from '../components/qrcode/create/Design';
-
-import { PlusIcon } from '@shopify/polaris-icons';
+import Colors from '../components/qrcode/create/Colors';
+import Frames from '../components/qrcode/create/Frames';
 export async function loader({ request }) {
   const { session } = await authenticate.admin(request);
   return json({ shop: session.shop })
@@ -26,38 +23,63 @@ export async function action({ request, params }) {
 
   const { shop } = session;
 
-  const data = {
-    ...Object.fromEntries(await request.formData()),
-    shop,
-  };
+  const formData = await request.formData();
 
-  if (data.action === "delete") {
-    await db.qRCode.delete({ where: { id: Number(params.id) } });
-    return redirect("/app");
+  console.log(formData, '---formData--------------')
+
+  if (formData) {
+
+    const response = await fetch('https://app.qodevault.com/api/qrqode/create/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return json({ data })
+    } else {
+      return json({ data: 'error' })
+    }
+
+
+
+
   }
 
-  const errors = validateQRCode(data);
-
-  if (errors) {
-    return json({ errors }, { status: 422 });
-  }
-
-  // const qrCode =
-  //   params.id === "new"
-  //     ? await db.qRCode.create({ data })
-  //     : await db.qRCode.update({ where: { id: Number(params.id) }, data });
-
-  const qrCode = await db.qRCode.create({ data })
-
-
-  console.log(qrCode.id, '---qrCode.id--------------')
-  return json({ qrCode: await getQRCode(Number(qrCode.id), admin.graphql) });
+  // if (data.action === "delete") {
+  //   await db.qRCode.delete({ where: { id: Number(params.id) } });
+  //   return redirect("/app");
+  // }
+  //
+  // const errors = validateQRCode(data);
+  //
+  // if (errors) {
+  //   return json({ errors }, { status: 422 });
+  // }
+  //
+  // // const qrCode =
+  // //   params.id === "new"
+  // //     ? await db.qRCode.create({ data })
+  // //     : await db.qRCode.update({ where: { id: Number(params.id) }, data });
+  //
+  // const qrCode = await db.qRCode.create({ data })
+  //
+  //
+  // console.log(qrCode.id, '---qrCode.id--------------')
+  // return json({ qrCode: await getQRCode(Number(qrCode.id), admin.graphql) });
 
 }
 
 const Create = () => {
 
   const [selectedType, setSelectedType] = useState(null)
+
+  const actionData = useActionData()
+
+  console.log(actionData)
 
   const nav = useNavigation();
   const isSaving =
@@ -91,7 +113,9 @@ const Create = () => {
                   <BlockStack gap={400}>
                     <Target type={selectedType} />
                     <Settings />
+                    <Colors />
                     <Design />
+                    <Frames />
                     {/* <Generate /> */}
                   </BlockStack>
                 </Grid.Cell>
