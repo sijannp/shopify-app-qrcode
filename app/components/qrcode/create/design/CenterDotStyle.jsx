@@ -14,23 +14,24 @@ const CenterDotStyle = () => {
     );
 
     const activator = (
-        <Button
-            textAlign='start'
-            fullWidth
-            onClick={togglePopoverActive}
-            ariaExpanded={open}
-            ariaControls="basic-collapsible"
-            variant='tertiary'
-        >
+        <Card>
+            <Button
+                textAlign='start'
+                fullWidth
+                onClick={togglePopoverActive}
+                ariaExpanded={open}
+                ariaControls="basic-collapsible"
+                variant='monochromePlain'
+                disclosure
+            >
 
-            <InlineStack style={{ gap: '1000px' }} gap={400} blockAlign='center'>
+                <InlineStack gap={400} blockAlign='center'>
 
-                <Card>
-                    <Avatar source={selectedCenterDotStyle.icon} size='lg' />
-                </Card>
-                <TextField name='marker_in' value={selectedCenterDotStyle.value} readOnly autoSize align='right' />
-            </InlineStack>
-        </Button>
+                    <Avatar source={selectedCenterDotStyle.icon} size='md' />
+                    <Text variant='bodyMd' as='p'>{selectedCenterDotStyle.name}</Text>
+                </InlineStack>
+            </Button>
+        </Card>
     );
     return (
         <>
@@ -58,7 +59,7 @@ const CenterDotStyle = () => {
                         </InlineStack>
                     </Card>
                 </Popover>
-                <Divider borderWidth='050' />
+                <input type='hidden' name='marker_in' value={selectedCenterDotStyle.value} />
             </BlockStack>
         </>
 

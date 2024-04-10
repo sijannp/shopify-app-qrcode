@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { DropZone, Thumbnail, Text, Card, BlockStack } from '@shopify/polaris';
-import { NoteIcon } from '@shopify/polaris-icons';
+import { DropZone, Thumbnail, Text, Card, BlockStack, InlineStack, Icon, Collapsible } from '@shopify/polaris';
+import { NoteIcon, CaretDownIcon } from '@shopify/polaris-icons';
 
 export default function Logo() {
+    const [open, setOpen] = useState(false);
+    const handleToggle = useCallback(() => setOpen((open) => !open), []);
+
     const [file, setFile] = useState();
     const [base64String, setBase64String] = useState();
 
@@ -52,15 +55,37 @@ export default function Logo() {
     return (
         <Card>
             <BlockStack gap={400}>
-                <Text as="h2" variant="headingMd"> Logo </Text>
-                <DropZone allowMultiple={false} onDrop={handleDropZoneDrop}>
-                    {uploadedFile}
-                    {fileUpload}
-                </DropZone>
+
+                <div style={{ cursor: 'pointer' }} >
+                    <BlockStack onClick={handleToggle} >
+                        <InlineStack align='space-between' blockAlign='center'>
+                            <Text as='h2' variant='headingMd'>Logo</Text>
+                            <div>
+                                <Icon source={CaretDownIcon} color='inkLighter' />
+                            </div>
+                        </InlineStack>
+                    </BlockStack>
+                </div>
+                <Collapsible
+                    open={open}
+                    id="basic-collapsible"
+                    transition={{ duration: '500ms', timingFunction: 'ease-in-out' }}
+                    expandOnPrint
+                >
+                    <BlockStack gap={400}>
+                        <DropZone allowMultiple={false} onDrop={handleDropZoneDrop}>
+                            {uploadedFile}
+                            {fileUpload}
+                        </DropZone>
+                        {base64String && (
+                            <input type="hidden" name="optionlogo" value={base64String} />
+                        )}
+                    </BlockStack>
+
+                </Collapsible>
+
             </BlockStack>
-            {base64String && (
-                <input type="hidden" name="optionlogo" value={base64String} />
-            )}
+
         </Card>
     );
 }

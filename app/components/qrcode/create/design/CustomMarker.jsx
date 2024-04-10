@@ -7,10 +7,10 @@ const CustomMarker = () => {
     const [customMarkersColor, setCustomMarkersColor] = useState(false)
 
     return (
-        <>
+        <BlockStack gap={400}>
             <Checkbox name='markers_color' label='Custom markers color' checked={customMarkersColor} onChange={() => setCustomMarkersColor(!customMarkersColor)} />
             {customMarkersColor && <CustomMarkerOptions />}
-        </>
+        </BlockStack>
     )
 }
 
@@ -33,8 +33,11 @@ const CustomMarkerOptions = () => {
                     </Grid.Cell>
                 </Grid>
 
-                <Checkbox name='different_marker_color' label='Different marker color' checked={differentMarkerColor} onChange={() => setDifferentMarkerColor(!differentMarkerColor)} />
-                {differentMarkerColor && <DifferentMarkerColor />}
+
+                <BlockStack gap={400}>
+                    <Checkbox name='different_marker_color' label='Different marker color' checked={differentMarkerColor} onChange={() => setDifferentMarkerColor(!differentMarkerColor)} />
+                    {differentMarkerColor && <DifferentMarkerColor />}
+                </BlockStack>
             </BlockStack>
         </>
     )
@@ -62,10 +65,7 @@ const DifferentMarkerColor = () => {
             <Grid.Cell columnSpan={{ 'sm': 6, 'md': 4, 'lg': 6 }}>
                 <ColorPickerComponent label='Bottom Left Center' inputName='marker_bottom_left_center' />
             </Grid.Cell>
-
         </Grid>
-
-
     )
 }
 

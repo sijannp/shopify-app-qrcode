@@ -18,24 +18,26 @@ const Pattern = () => {
     );
 
     const activator = (
-        <Button
-            textAlign='start'
-            fullWidth
+        <Card>
+            <Button
+                textAlign='start'
+                fullWidth
+                disclosure
+                onClick={togglePopoverActive}
+                ariaExpanded={open}
+                ariaControls="basic-collapsible"
+                variant='monochromePlain'
+            >
 
-            onClick={togglePopoverActive}
-            ariaExpanded={open}
-            ariaControls="basic-collapsible"
-            variant='tertiary'
-        >
+                <InlineStack gap={400} blockAlign='center' wrap={false}>
 
-            <InlineStack gap={400} blockAlign='center'>
 
-                <Card>
-                    <Avatar source={selectedPattern.icon} size='lg' />
-                </Card>
-                <TextField name='pattern' value={selectedPattern.value} readOnly autoSize align='right' />
-            </InlineStack>
-        </Button>
+                    <Avatar source={selectedPattern.icon} size='md' />
+                    <Text variant='bodySm' as='p' alignment='right'>{selectedPattern.name}</Text>
+
+                </InlineStack>
+            </Button>
+        </Card>
     );
 
 
@@ -66,7 +68,7 @@ const Pattern = () => {
                         </InlineStack>
                     </Card>
                 </Popover>
-                <Divider borderWidth='050' />
+                <input type='hidden' name='pattern' value={selectedPattern.value} />
             </BlockStack>
         </>
 

@@ -18,23 +18,23 @@ const Marker = () => {
     );
 
     const activator = (
-        <Button
-            textAlign='start'
-            fullWidth
-            onClick={togglePopoverActive}
-            ariaExpanded={open}
-            ariaControls="basic-collapsible"
-            variant='tertiary'
-        >
+        <Card>
+            <Button
+                textAlign='start'
+                fullWidth
+                onClick={togglePopoverActive}
+                ariaExpanded={open}
+                ariaControls="basic-collapsible"
+                variant='monochromePlain'
+                disclosure
+            >
 
-            <InlineStack gap={400} blockAlign='center'>
-
-                <Card>
-                    <Avatar source={selectedBorderType.icon} size='lg' />
-                </Card>
-                <TextField name='marker' value={selectedBorderType.value} readOnly autoSize align='right' />
-            </InlineStack>
-        </Button>
+                <InlineStack gap={400} blockAlign='center' wrap={false}>
+                    <Avatar source={selectedBorderType.icon} size='md' />
+                    <Text variant='bodySm' as='p' alignment='right'>{selectedBorderType.name}</Text>
+                </InlineStack>
+            </Button>
+        </Card >
     );
     return (
         <>
@@ -64,7 +64,7 @@ const Marker = () => {
                         </InlineStack>
                     </Card>
                 </Popover>
-                <Divider borderWidth='050' />
+                <input type="hidden" name="marker" value={selectedBorderType.value} />
             </BlockStack>
         </>
 

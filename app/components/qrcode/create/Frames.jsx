@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react'
-import { Card, BlockStack, Text, Avatar, InlineStack, Button, Collapsible, Divider, TextField, Popover, Checkbox, Select } from '@shopify/polaris'
+import { Card, BlockStack, Text, Avatar, InlineStack, Button, Collapsible, Divider, TextField, Popover, Checkbox, Select, Icon } from '@shopify/polaris'
+import { CaretDownIcon } from '@shopify/polaris-icons';
 import { frames } from '../../../constants/frames';
 import { ColorPickerComponent } from '../CustomColorPicker';
 
 
 const Frames = () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     const [selectedFrame, setSelectedFrame] = useState(frames[0])
 
@@ -16,6 +17,10 @@ const Frames = () => {
         () => { setPopoverActive((popoverActive) => !popoverActive) },
         [],
     );
+
+    const [openCollapsible, setOpenCollapsible] = useState(false);
+
+    const handleToggle = useCallback(() => setOpenCollapsible((open) => !open), []);
 
     const activator = (
         <Button
@@ -42,33 +47,50 @@ const Frames = () => {
 
     return (
         <Card>
-            <BlockStack gap={400}>   <Text variant='headingMd'>Frame</Text>
-
-                <Popover
-                    active={popoverActive}
-                    activator={activator}
-                    autofocusTarget="first-node"
-                    onClose={togglePopoverActive}
-                >
-                    <Card>
-                        <InlineStack wrap={true} gap={600} align='center'>
-
-                            {frames.map((frame) => (
-                                <Button tone='success' variant={`${selectedFrame.value == frame.value ? 'plain' : 'monochromePlain'}`} key={frame.id} onClick={() => { setSelectedFrame(frame); setOpen(false) }}>
-                                    <Card key={frame.id}>
-                                        <BlockStack gap={400}>
-                                            <img style={{ width: '40px', height: 'auto' }} src={frame.icon} />
-                                        </BlockStack>
-                                    </Card>
-                                </Button>
-                            ))
-                            }
+            <BlockStack gap={400}>
+                <div style={{ cursor: 'pointer' }} >
+                    <BlockStack onClick={handleToggle} >
+                        <InlineStack align='space-between' blockAlign='center'>
+                            <Text as='h2' variant='headingMd'>Frame</Text>
+                            <div>
+                                <Icon source={CaretDownIcon} color='inkLighter' />
+                            </div>
                         </InlineStack>
-                    </Card>
-                </Popover>
+                    </BlockStack>
+                </div>
 
-                {selectedFrame.value !== 'none' && <AdditionalFrameSettings />}
-                <Divider borderWidth='050' />
+                <Collapsible
+                    open={openCollapsible}
+                    id="basic-collapsible"
+                    transition={{ duration: '500ms', timingFunction: 'ease-in-out' }}
+                    expandOnPrint
+                >
+
+                    <Popover
+                        active={popoverActive}
+                        activator={activator}
+                        autofocusTarget="first-node"
+                        onClose={togglePopoverActive}
+                    >
+                        <Card>
+                            <InlineStack wrap={true} gap={600} align='center'>
+
+                                {frames.map((frame) => (
+                                    <Button tone='success' variant={`${selectedFrame.value == frame.value ? 'plain' : 'monochromePlain'}`} key={frame.id} onClick={() => { setSelectedFrame(frame); setOpen(false) }}>
+                                        <Card key={frame.id}>
+                                            <BlockStack gap={400}>
+                                                <img style={{ width: '40px', height: 'auto' }} src={frame.icon} />
+                                            </BlockStack>
+                                        </Card>
+                                    </Button>
+                                ))
+                                }
+                            </InlineStack>
+                        </Card>
+                    </Popover>
+
+                    {selectedFrame.value !== 'none' && <AdditionalFrameSettings />}
+                </Collapsible>
             </BlockStack>
         </Card>
 

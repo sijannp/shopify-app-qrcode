@@ -130,7 +130,7 @@ const ReturnTarget = ({ type }) => {
                         </Button>
                     ) : null}
                     {formState?.productHandle &&
-                        <TextField name='url' value={`${url}/product/${formState?.productHandle}`} type='text' readOnly />
+                        <TextField name='link' value={`${url}/products/${formState?.productHandle}`} type='text' readOnly />
                     }
                 </BlockStack>
 
@@ -158,11 +158,17 @@ const ReturnTarget = ({ type }) => {
                         </BlockStack>
                     )}
                     {collection?.collectionId ? (
-                        <Button variant="plain" onClick={selectCollection}>
-                            Change Collection
-                        </Button>
+                        <>
+                            <Button variant="plain" onClick={selectCollection}>
+                                Change Collection
+                            </Button>
+                            <Link url={`${url}/collections/${collection?.collectionHandle}`} target='_blank' monochrome removeUnderline >
+                                <TextField name='link' value={`${url}/collections/${collection?.collectionHandle}`} type='text' readOnly />
+                            </Link>
+                            <input type='hidden' name='link' value={`${url}/collections/${collection?.collectionHandle}`} />
+                        </>
                     ) : null}
-                    <TextField name='target' value={`${collection?.collectionHandle}`} type='text' readOnly />
+
                 </BlockStack>
 
             )
