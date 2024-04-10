@@ -1,48 +1,11 @@
-import { useActionData } from '@remix-run/react'
-import { BlockStack, Button, Card, Checkbox, DatePicker, FormLayout, InlineError, InlineStack, Popover, Text, TextField } from '@shopify/polaris'
-import React, { useCallback, useState } from 'react'
+import { BlockStack, Card, FormLayout, InlineError, Text, TextField } from '@shopify/polaris'
+import React from 'react'
 
-const Settings = ({ title = '' }) => {
+const Settings = ({ title = '', errors }) => {
     const [email, setEmail] = React.useState(title)
     const handleEmailChange = (value) => setEmail(value)
-    const errors = useActionData()?.errors || {};
-
-    const today = new Date();
-    console.log(today)
-
-    const [month, setMonth] = useState(today.getMonth()); // Month (1-indexed)
-    const [year, setYear] = useState(today.getFullYear());
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [selectedDateString, setSelectedDateString] = useState(null);
 
 
-    const handleMonthChange = useCallback(
-        (month, year) => {
-            setMonth(month);
-            setYear(year);
-        },
-        [],
-    );
-
-    const HandleSelectedDate = (date) => {
-        setSelectedDate(date)
-        console.log(date, '---date--------------')
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        setSelectedDateString({ month: months[date.getMonth()], year: date.getFullYear(), day: date.getDate() })
-    }
-
-    const [popoverActive, setPopoverActive] = useState(false);
-
-    const togglePopoverActive = useCallback(
-        () => setPopoverActive((popoverActive) => !popoverActive),
-        [],
-    );
-
-    const activator = (
-        <Button onClick={togglePopoverActive} disclosure>
-            {selectedDate ? `${selectedDateString.month} ${selectedDateString.day}, ${selectedDateString.year} ` : 'Never'}
-        </Button>
-    );
     return (
         <Card>
             <BlockStack gap={400}>
@@ -59,16 +22,15 @@ const Settings = ({ title = '' }) => {
                         requiredIndicator
 
                     />
-                    <input type='hidden' name='dynamic' value={true} />
-                    <input type='hidden' name='is_editing' value={true} />
-                    <InlineStack align='space-between' blockAlign='center'>
+
+                    {/* <InlineStack align='space-between' blockAlign='center'>
                         <Text> Expiry Date </Text>
                         {selectedDate && <Button tone='critical' variant='plain' onClick={() => { setSelectedDate(null) }} > Reset</Button>}
-                    </InlineStack>
+                    </InlineStack> */}
 
 
 
-                    <Popover
+                    {/* <Popover
                         active={popoverActive}
                         activator={activator}
                         autofocusTarget="first-node"
@@ -87,10 +49,10 @@ const Settings = ({ title = '' }) => {
                             />
                         </Card>
 
-                    </Popover>
-                    {errors.title ? (
+                    </Popover> */}
+                    {errors.name ? (
                         <InlineError
-                            message={errors.title}
+                            message={errors.name}
                             fieldID="myFieldID"
                         />
                     ) : null}

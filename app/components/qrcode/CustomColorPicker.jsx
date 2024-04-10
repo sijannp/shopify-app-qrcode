@@ -21,7 +21,7 @@ export const ColorPickerComponent = ({ label, inputName, defaultColor }) => {
     const activator = (
         <Button onClick={togglePopoverActive} variant='monochromePlain'   >
             <InlineStack blockAlign='center' gap={300}>
-                <div style={{ backgroundColor: `hsl(${color.hue}, ${color.saturation * 100}%, ${color.brightness * 100}%)`, border: '1px solid', width: '40px', height: '40px', borderRadius: '4px' }}></div>
+                <div style={{ backgroundColor: `${hsbToHex(color.hue, color.saturation, color.brightness)}`, border: '1px solid', width: '40px', height: '40px', borderRadius: '4px' }}></div>
                 <BlockStack align='start' inlineAlign='start'>
                     <Text as='h2' variant='bodyMd'>{label}</Text>
                     <Text> {hsbToHex(color.hue, color.saturation, color.brightness)} </Text>
@@ -40,7 +40,6 @@ export const ColorPickerComponent = ({ label, inputName, defaultColor }) => {
                 onClose={togglePopoverActive}
             >
                 <ColorPicker onChange={setColor} color={color} />
-
             </Popover>
             {inputName && <input type='hidden' name={inputName} value={hsbToHex(color.hue, color.saturation, color.brightness)} />}
         </>

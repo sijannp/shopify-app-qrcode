@@ -3,7 +3,7 @@
 client_id = "66a501c47dd429e1c9f7ef7c13e0ccdc"
 name = "qr-generator"
 handle = "qr-generator-14"
-application_url = "https://viewers-officers-tells-romania.trycloudflare.com"
+application_url = "https://cutting-access-commodity-visited.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://viewers-officers-tells-romania.trycloudflare.com/auth/callback",
-  "https://viewers-officers-tells-romania.trycloudflare.com/auth/shopify/callback",
-  "https://viewers-officers-tells-romania.trycloudflare.com/api/auth/callback"
+  "https://cutting-access-commodity-visited.trycloudflare.com/auth/callback",
+  "https://cutting-access-commodity-visited.trycloudflare.com/auth/shopify/callback",
+  "https://cutting-access-commodity-visited.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

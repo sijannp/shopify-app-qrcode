@@ -95,7 +95,8 @@ const ReturnTarget = ({ type }) => {
                 <Link url={url} target='_blank' monochrome removeUnderline>
                     <BlockStack blockAlign='center' gap={100}>
                         {/* <Text>{url}</Text> */}
-                        <TextField name='target' value={url} type='text' readOnly />
+                        <input type='hidden' name='section' value='#link' />
+                        <TextField name='link' value={url} type='text' readOnly />
                         {/* <Icon source={ExternalIcon} /> */}
                     </BlockStack>
                 </Link>
@@ -129,7 +130,7 @@ const ReturnTarget = ({ type }) => {
                         </Button>
                     ) : null}
                     {formState?.productHandle &&
-                        <TextField name='target' value={formState?.productHandle} type='text' readOnly />
+                        <TextField name='url' value={`${url}/product/${formState?.productHandle}`} type='text' readOnly />
                     }
                 </BlockStack>
 

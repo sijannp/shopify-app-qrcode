@@ -1,36 +1,21 @@
-import { Avatar, BlockStack, Box, Button, ButtonGroup, Card, Icon, InlineStack, Select, Text } from '@shopify/polaris'
+import { Avatar, BlockStack, Box, Button, ButtonGroup, Card, Select, Text } from '@shopify/polaris'
 import {
     ArrowDownIcon, MagicIcon
 } from '@shopify/polaris-icons';
 import React, { useCallback, useRef, useState } from 'react'
 import QRCExample from '../../../assets/img/QRCExample.svg'
-import { useActionData, useNavigation } from '@remix-run/react';
 
-const Output = () => {
-    const [selected, setSelected] = useState('today');
-    const [selectedSize, setSelectedSize] = useState('small');
-
-
-    const nav = useNavigation();
-    const isSaving =
-        nav.state === "submitting";
-
-    const errors = useActionData()?.errors || {};
-
-    const handleSelectChange = useCallback(
-        (value) => setSelected(value),
-        [],
-    );
-
+const Output = ({ result, isSaving, errors }) => {
+    const [selectedSize, setSelectedSize] = useState('12');
     const handleSizeSelectChange = useCallback(
         (value) => setSelectedSize(value),
         [],
     );
 
     const sizeOptions = [
-        { label: 'Small', value: 'small' },
-        { label: 'Medium', value: 'medium' },
-        { label: 'Large', value: 'large' },
+        { label: 'Small', value: '12' },
+        { label: 'Medium', value: '24' },
+        { label: 'Large', value: '32' },
     ]
 
     const typeOptions = [
@@ -39,7 +24,11 @@ const Output = () => {
         { label: 'JPG', value: 'jpg' },
     ];
 
-    const qrCode = useActionData()?.qrCode || null;
+    // const qrCode = useActionData()?.qrCode || null;
+
+    const qrCode = result?.result || null;
+
+    console.log(qrCode, '---result--------------')
 
     const modalRef = useRef(null);
 
@@ -60,24 +49,25 @@ const Output = () => {
     return (
         <Card>
             <BlockStack gap={600}>
-                {qrCode ? <Avatar size="large" source={qrCode.image} /> :
+                {qrCode ? <SvgComponent parentClassName='qv-output' svgContent={qrCode.content} /> :
                     <Avatar size="large" source={QRCExample} />
                 }
                 <BlockStack gap={300}>
 
                     <Select
                         label="Size"
+                        name='size'
                         options={sizeOptions}
                         onChange={handleSizeSelectChange}
                         value={selectedSize}
-
                     />
-                    <Select
+                    <input type='hidden' name='level' value="M" />
+                    {/* <Select
                         label="Type"
                         options={typeOptions}
                         onChange={handleSelectChange}
                         value={selected}
-                    />
+                    /> */}
                 </BlockStack>
 
 
@@ -101,8 +91,19 @@ const Output = () => {
                 </ButtonGroup>
             </BlockStack>
 
+
+
         </Card>
     )
 }
 
 export default Output
+
+
+
+function SvgComponent({ parentClassName, svgContent }) {
+    return (
+        <div className={parentClassName} dangerouslySetInnerHTML={{ __html: svgContent, }} />
+    );
+}
+

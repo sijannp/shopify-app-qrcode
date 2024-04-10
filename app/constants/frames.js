@@ -41,7 +41,7 @@ export const frames = [
     },
     {
         name: 'Balloon Boom',
-        value: 'balloon-boom',
+        value: 'balloon-bottom',
         icon: BalloonBoomFrame
     },
     {
