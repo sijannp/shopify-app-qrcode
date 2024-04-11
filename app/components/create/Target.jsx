@@ -1,28 +1,25 @@
-import { useActionData, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import { BlockStack, Button, Card, InlineError, InlineStack, Link, Text, TextField, Thumbnail } from '@shopify/polaris'
 import React, { useState } from 'react'
 import { ImageIcon } from "@shopify/polaris-icons";
 
-const Target = ({ type }) => {
-
-    const errors = useActionData()?.errors || {};
-
-
+const Target = ({ type, errors }) => {
     return (
         <Card>
             <BlockStack gap={400}>
                 <InlineStack blockAlign='center' align='space-between'>
                     <Text as='span' variant='headingMd' >Target</Text>
                     <InlineStack>
-                        <TextField name='type' value={type.value} type='text' readOnly autoSize />
+                        <input type='hidden' name='type' value={type.value} />
                     </InlineStack>
                 </InlineStack>
                 <ReturnTarget type={type} />
+                <ReturnType type={type} />
 
 
-                {errors.target ? (
+                {errors.link ? (
                     <InlineError
-                        message={errors.target}
+                        message={errors.link}
                         fieldID="myFieldID"
                     />
                 ) : null}
@@ -32,6 +29,21 @@ const Target = ({ type }) => {
 }
 
 export default Target
+
+
+const ReturnType = ({ type }) => {
+    switch (type.value) {
+        case 'homepage':
+        case 'product':
+        case 'collection':
+        case 'link':
+            return <input type='hidden' name='section' value='#link' />
+        case 'text':
+            return <input type='hidden' name='section' value='#text' />
+        case 'email':
+            return <input type='hidden' name='section' value='#email' />
+    }
+}
 
 
 const ReturnTarget = ({ type }) => {
@@ -44,7 +56,6 @@ const ReturnTarget = ({ type }) => {
         const collections = await window.shopify.resourcePicker({
             type: "collection",
             action: "select",
-            // customized action verb, either 'select' or 'add',
         });
 
         console.log(collections);
@@ -69,7 +80,6 @@ const ReturnTarget = ({ type }) => {
             type: "product",
             action: "select",
             multiple: false
-            // customized action verb, either 'select' or 'add',
         });
 
         if (products) {
@@ -94,10 +104,8 @@ const ReturnTarget = ({ type }) => {
 
                 <Link url={url} target='_blank' monochrome removeUnderline>
                     <BlockStack blockAlign='center' gap={100}>
-                        {/* <Text>{url}</Text> */}
-                        <input type='hidden' name='section' value='#link' />
-                        <TextField name='link' value={url} type='text' readOnly />
-                        {/* <Icon source={ExternalIcon} /> */}
+                        <Text as='span' variant='bodyMd'> {url} </Text>
+                        <input type='hidden' name='link' value={url} />
                     </BlockStack>
                 </Link>
 
@@ -171,6 +179,69 @@ const ReturnTarget = ({ type }) => {
 
                 </BlockStack>
 
+            )
+
+        case 'link':
+            const validateLink = (link) => {
+                if (link.startsWith('http://') || link.startsWith('https://')) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            const [link, setLink] = useState('')
+            const [validLink, setValidLink] = useState(false)
+
+            const handleLinkChange = (value) => {
+                setLink(value)
+                setValidLink(validateLink(value))
+            }
+
+            return (
+                <BlockStack gap={200}>
+                    <TextField label='Link' name='link' type='text' value={link} onChange={handleLinkChange} />
+                    {link && !validLink && <InlineError message='Please enter a valid link' fieldID="myFieldID" />}
+                </BlockStack>
+            )
+
+        case 'text':
+            const [text, setText] = useState('')
+            const [validText, setValidText] = useState(false)
+
+            const handleTextChange = (value) => {
+                setText(value)
+                setValidText(value.length > 0)
+            }
+
+            return (
+                <BlockStack gap={200}>
+                    <TextField label='Text' name='data' type='text' value={text} onChange={handleTextChange} />
+                    {text && !validText && <InlineError message='Please enter a text' fieldID="myFieldID" />}
+                </BlockStack>
+            )
+
+
+        case 'email':
+            const [email, setEmail] = useState('')
+            const [subject, setSubject] = useState('')
+            const [message, setMessage] = useState('')
+
+            const validateEmail = (email) => {
+                if (email.includes('@') && email.includes('.')) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+
+
+            return (
+                <BlockStack gap={200}>
+                    <TextField label='Email' name='mailto' type='email' value={email} onChange={(value) => setEmail(value)} />
+                    {email && !validateEmail(email) && <InlineError message='Please enter a valid email' fieldID="myFieldID" />}
+                    <TextField label='Subject' name='subject' type='text' value={subject} onChange={(value) => setSubject(value)} />
+                    <TextField label='Message' name='body' type='text' value={message} onChange={(value) => setMessage(value)} />
+                </BlockStack>
             )
     }
 

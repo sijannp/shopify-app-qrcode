@@ -9,7 +9,6 @@ export const qrCodeTypes = [
             { label: 'Homepage', value: 'homepage', icon: HomeIcon },
             { label: 'Product', value: 'product', icon: ProductIcon },
             { label: 'Collection', value: 'collection', icon: CollectionIcon },
-            { label: 'Page', value: 'page', icon: PageIcon }
 
         ]
     },
@@ -28,3 +27,13 @@ export const qrCodeTypes = [
         ]
     }
 ]
+
+
+export const popularTypes = [
+    { label: 'Homepage', value: 'homepage', icon: HomeIcon },
+    { label: 'Product', value: 'product', icon: ProductIcon },
+    { label: 'Collection', value: 'collection', icon: CollectionIcon },
+    { label: 'Link', value: 'link', icon: LinkIcon },
+    { label: 'Text', value: 'text', icon: TextIcon },
+
+] 

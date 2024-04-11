@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react'
 import {
     CaretDownIcon
 } from '@shopify/polaris-icons';
-import { ColorPickerComponent } from '../CustomColorPicker'
+import { ColorPickerComponent } from '../ColorPicker'
 
 
 const Colors = () => {

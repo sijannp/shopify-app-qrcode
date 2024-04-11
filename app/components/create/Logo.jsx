@@ -3,7 +3,7 @@ import { DropZone, Thumbnail, Text, Card, BlockStack, InlineStack, Icon, Collaps
 import { NoteIcon, CaretDownIcon } from '@shopify/polaris-icons';
 
 export default function Logo() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const handleToggle = useCallback(() => setOpen((open) => !open), []);
 
     const [file, setFile] = useState();
@@ -54,7 +54,7 @@ export default function Logo() {
 
     return (
         <Card>
-            <BlockStack gap={400}>
+            <BlockStack gap={600}>
 
                 <div style={{ cursor: 'pointer' }} >
                     <BlockStack onClick={handleToggle} >
@@ -66,26 +66,29 @@ export default function Logo() {
                         </InlineStack>
                     </BlockStack>
                 </div>
+
                 <Collapsible
                     open={open}
                     id="basic-collapsible"
                     transition={{ duration: '500ms', timingFunction: 'ease-in-out' }}
                     expandOnPrint
                 >
-                    <BlockStack gap={400}>
-                        <DropZone allowMultiple={false} onDrop={handleDropZoneDrop}>
-                            {uploadedFile}
-                            {fileUpload}
-                        </DropZone>
-                        {base64String && (
-                            <input type="hidden" name="optionlogo" value={base64String} />
-                        )}
-                    </BlockStack>
+
+                    <DropZone allowMultiple={false} onDrop={handleDropZoneDrop}>
+                        {uploadedFile}
+                        {fileUpload}
+                    </DropZone>
+
+
 
                 </Collapsible>
 
-            </BlockStack>
 
-        </Card>
+            </BlockStack>
+            {base64String && (
+                <input type="hidden" name="optionlogo" value={base64String} />
+            )}
+
+        </Card >
     );
 }

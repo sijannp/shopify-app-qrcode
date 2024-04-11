@@ -1,18 +1,20 @@
 import React, { useRef, useState } from 'react'
-import SelectType from '../components/qrcode/types/SelectType'
+import SelectType from '../components/create/types/SelectType'
 import { BlockStack, Button, Divider, Grid, InlineStack, Page, Text } from '@shopify/polaris'
 import { authenticate } from '../shopify.server';
 import { json } from '@remix-run/node';
-import { Form, redirect, useActionData, useNavigation } from '@remix-run/react';
-import Target from '../components/qrcode/create/Target';
-import Settings from '../components/qrcode/create/Settings';
-import Output from '../components/qrcode/create/Output';
-import Type from '../components/qrcode/create/Type';
-import Design from '../components/qrcode/create/Design';
-import Colors from '../components/qrcode/create/Colors';
-import Frames from '../components/qrcode/create/Frames';
+import { Form } from '@remix-run/react';
+import Target from '../components/create/Target';
+import Settings from '../components/create/Settings';
+import Output from '../components/create/Output';
+import Type from '../components/create/Type';
+import Design from '../components/create/Design';
+import Colors from '../components/create/Colors';
+import Frames from '../components/create/Frames';
 import outputStyles from '../styles/output.css?url'
-import Logo from '../components/qrcode/create/Logo';
+import Logo from '../components/create/Logo';
+
+
 export async function loader({ request }) {
   const { session } = await authenticate.admin(request);
   return json({ shop: session.shop })
@@ -81,6 +83,7 @@ const Create = () => {
   const [errors, setErrors] = useState({})
   const [isSaving, setIsSaving] = useState(false)
   const [result, setResult] = useState(null)
+  const [qrCodeInfo, setQrCodeInfo] = useState(null)
   const formRef = useRef(null);
 
 
@@ -93,8 +96,8 @@ const Create = () => {
     }
 
 
-    if (!formData.get("link") || formData.get("link").trim() === "") {
-      newErrors.link = "Link is required";
+    if (!formData.get("section") || formData.get("section").trim() === "") {
+      newErrors.link = "Section is required";
     }
 
     setErrors(newErrors);
@@ -162,9 +165,9 @@ const Create = () => {
         "size": 24,
         "level": "M",
         "imagePreview": "",
-        "link": "http://",
+        "link": "http://app.qodevault.com",
         "section": "#link",
-        "title": "aa",
+        "title": "Test QR Code",
         "dynamic": true,
         "is_editing": false
       }
@@ -172,12 +175,15 @@ const Create = () => {
 
       for (const key in defaultFormData) {
         if (!formData.has(key)) {
+
+          console.log('Missing key', key, defaultFormData[key])
           formData.append(key, defaultFormData[key]);
         }
       }
 
+      const objectFormData = Object.fromEntries(formData.entries());
 
-      // Use formData for further processing or sending to the server
+
       const response = await fetch("https://app.qodevault.com/api/qrqode/create", {
         method: "POST",
         body: formData,
@@ -185,15 +191,14 @@ const Create = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setResult(data)
+        if (data && data.result?.content) {
+          setResult(data)
+          setQrCodeInfo(objectFormData)
+        } else {
+          setErrors({ general: 'Something went wrong' })
+        }
       }
-
-
-
     } else {
-
-
-
     }
     setIsSaving(false);
 
@@ -202,14 +207,14 @@ const Create = () => {
 
 
 
+
   return (
     <Page>
       <BlockStack gap={400}>
         <InlineStack align='space-between' blockAlign='center'>
-          <Text as='h2' variant='headingLg'>Home {'>'} Create</Text>
+          <Text as='h2' variant='headingLg'> Create</Text>
           <Button size='large' url='/app' loading={isSaving} disabled={isSaving} > Back </Button>
         </InlineStack>
-        <Divider borderWidth='050' />
       </BlockStack>
       {
         selectedType ?
@@ -225,8 +230,8 @@ const Create = () => {
                 <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 4, lg: 8, xl: 8 }}>
 
                   <BlockStack gap={400}>
-                    <Target type={selectedType} />
                     <Settings errors={errors} />
+                    <Target type={selectedType} errors={errors} />
                     <Colors />
                     <Design />
                     <Frames />
@@ -235,7 +240,7 @@ const Create = () => {
                   </BlockStack>
                 </Grid.Cell>
                 <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 2, lg: 4, xl: 4 }} >
-                  <Output type={selectedType} result={result} isSaving={isSaving} errors={errors} />
+                  <Output type={selectedType} qrCodeInfo={qrCodeInfo} result={result} isSaving={isSaving} errors={errors} />
                 </Grid.Cell>
               </Grid>
             </BlockStack>

@@ -1,19 +1,18 @@
 import React, { useCallback, useState } from 'react'
-import { borderTypes } from '../../../../constants/border-types'
-import { Card, BlockStack, Text, Avatar, InlineStack, Button, Collapsible, Divider, TextField, Popover } from '@shopify/polaris'
-import CustomMarker from './CustomMarker';
+import { Card, BlockStack, Text, Avatar, InlineStack, Button, Popover } from '@shopify/polaris'
 
-const Marker = () => {
-    const [open, setOpen] = useState(false);
 
-    const [selectedBorderType, setSelectedBorderType] = useState(borderTypes[0])
+const CustomPopover = ({ types, title, inputName }) => {
 
-    const handleToggle = useCallback(() => setOpen((open) => !open), []);
+    const [selectedType, setselectedType] = useState(types[0])
 
     const [popoverActive, setPopoverActive] = useState(false);
 
     const togglePopoverActive = useCallback(
-        () => { setPopoverActive((popoverActive) => !popoverActive) },
+        () => {
+            setPopoverActive((popoverActive) => !popoverActive)
+
+        },
         [],
     );
 
@@ -23,15 +22,14 @@ const Marker = () => {
                 textAlign='start'
                 fullWidth
                 onClick={togglePopoverActive}
-                ariaExpanded={open}
                 ariaControls="basic-collapsible"
                 variant='monochromePlain'
                 disclosure
             >
 
                 <InlineStack gap={400} blockAlign='center' wrap={false}>
-                    <Avatar source={selectedBorderType.icon} size='md' />
-                    <Text variant='bodySm' as='p' alignment='right'>{selectedBorderType.name}</Text>
+                    <Avatar source={selectedType.icon} size='md' />
+                    <Text variant='bodySm' as='p' alignment='right'>{selectedType.name}</Text>
                 </InlineStack>
             </Button>
         </Card >
@@ -39,7 +37,7 @@ const Marker = () => {
     return (
         <>
             <BlockStack gap={400}>
-                <Text variant='bodyMd'>Border type</Text>
+                <Text variant='bodyMd'>{title}</Text>
 
                 <Popover
                     active={popoverActive}
@@ -51,11 +49,11 @@ const Marker = () => {
                     <Card>
                         <InlineStack wrap={true} gap={600} align='center'>
 
-                            {borderTypes.map((borderType) => (
-                                <Button tone='success' variant={`${selectedBorderType.value == borderType.value ? 'plain' : 'monochromePlain'}`} key={borderType.id} onClick={() => { setSelectedBorderType(borderType); setOpen(false) }}>
-                                    <Card key={borderType.id}>
+                            {types.map((type, index) => (
+                                <Button tone='success' variant={`${selectedType.value == type.value ? 'plain' : 'monochromePlain'}`} key={index} onClick={() => { setselectedType(type); setPopoverActive(false) }}>
+                                    <Card key={type.id} background={`${selectedType.value == type.value ? 'bg-fill-success-secondary' : ''}`}>
                                         <BlockStack gap={400}>
-                                            <Avatar source={borderType.icon} size='lg' />
+                                            <Avatar source={type.icon} size='lg' />
                                         </BlockStack>
                                     </Card>
                                 </Button>
@@ -64,11 +62,11 @@ const Marker = () => {
                         </InlineStack>
                     </Card>
                 </Popover>
-                <input type="hidden" name="marker" value={selectedBorderType.value} />
+                <input type="hidden" name={inputName} value={selectedType.value} />
             </BlockStack>
         </>
 
     )
 }
 
-export default Marker
+export default CustomPopover

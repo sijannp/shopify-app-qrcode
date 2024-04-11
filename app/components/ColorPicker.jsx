@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { ColorPicker, Popover, Button, Text, BlockStack, InlineStack } from '@shopify/polaris';
-import hsbToHex from '../../utils/Helpers';
-
+import hsbToHex from '../utils/Helpers'
 
 
 export const ColorPickerComponent = ({ label, inputName, defaultColor }) => {

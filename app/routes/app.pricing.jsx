@@ -1,6 +1,6 @@
 import React from 'react'
 import { BASIC_PLAN, PRO_PLAN, authenticate } from '../shopify.server';
-import { Badge, BlockStack, Button, Card, Divider, InlineGrid, InlineStack, List, Page, Text } from '@shopify/polaris';
+import { Badge, BlockStack, Button, Card, Divider, Grid, InlineGrid, InlineStack, List, Page, Text } from '@shopify/polaris';
 import { useLoaderData, useNavigation } from '@remix-run/react';
 
 
@@ -85,45 +85,47 @@ const Pricing = () => {
                             Choose a plan that fits your needs. You can always upgrade or downgrade your plan.
                         </Text>
                     </BlockStack>
-
-                    <InlineStack align='center' gap='200' >
+                    <InlineStack gap={400} blockAlign='center' align='center'>
 
                         {plans.map((plan, index) => {
                             return (
-                                <Card key={index} background={`${plan.hasUpgraded ? 'bg-fill-success-secondary' : ''}`}>
+                                <Grid.Cell columnSpan={{ 'xs': 6, 'sm': 6, 'md': 3, 'lg': 6 }}>
+                                    <Card key={index} background={`${plan.hasUpgraded ? 'bg-fill-success-secondary' : ''}`}>
 
-                                    <BlockStack gap={500}>
-                                        <BlockStack gap={300} inlineAlign='center'>
-                                            <InlineStack gap={200}>
-                                                <Text as="h3" alignment='center' variant="headingLg">
-                                                    {plan.name}
+                                        <BlockStack gap={500}>
+                                            <BlockStack gap={300} inlineAlign='center'>
+                                                <InlineStack gap={200}>
+                                                    <Text as="h3" alignment='center' variant="headingLg">
+                                                        {plan.name}
+                                                    </Text>
+
+                                                </InlineStack>
+                                                <Badge tone='success' size='large'> 7-DAY FREE TRIAL </Badge>
+                                                <Text as='h3' variant='headingMd' tone='magic' alignment='center'>
+                                                    {plan.price} per month <br />
+
                                                 </Text>
-
-                                            </InlineStack>
-                                            <Badge tone='success' size='large'> 7-DAY FREE TRIAL </Badge>
-                                            <Text as='h3' variant='headingMd' tone='magic' alignment='center'>
-                                                {plan.price} per month <br />
-
-                                            </Text>
+                                            </BlockStack>
+                                            <Divider borderWidth='050' />
+                                            <List>
+                                                {plan.features.map((feature, index) => {
+                                                    return (
+                                                        <List.Item key={index}>
+                                                            <Text variant='bodyMd'>{feature}</Text>
+                                                        </List.Item>
+                                                    )
+                                                })}
+                                            </List>
+                                            <Button variant='primary' disabled={isLoading} tone={`${plan.hasUpgraded ? 'critical' : 'success'}`} url={`${plan.hasUpgraded ? plan.cancelUrl : plan.upgradeUrl}`}>
+                                                {plan.hasUpgraded ? 'Cancel' : 'Upgrade'}
+                                            </Button>
                                         </BlockStack>
-                                        <Divider borderWidth='050' />
-                                        <List>
-                                            {plan.features.map((feature, index) => {
-                                                return (
-                                                    <List.Item key={index}>
-                                                        <Text variant='bodyMd'>{feature}</Text>
-                                                    </List.Item>
-                                                )
-                                            })}
-                                        </List>
-                                        <Button variant='primary' disabled={isLoading} loading={isLoading} tone={`${plan.hasUpgraded ? 'critical' : 'success'}`} url={`${plan.hasUpgraded ? plan.cancelUrl : plan.upgradeUrl}`}>
-                                            {plan.hasUpgraded ? 'Cancel' : 'Upgrade'}
-                                        </Button>
-                                    </BlockStack>
-                                </Card>
+                                    </Card>
+                                </Grid.Cell>
                             )
                         })}
                     </InlineStack>
+
                 </BlockStack>
             </Card>
 

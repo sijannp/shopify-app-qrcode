@@ -1,10 +1,11 @@
-import { BlockStack, Button, Card, Collapsible, ColorPicker, Grid, Icon, InlineGrid, InlineStack, LegacyCard, Modal, Popover, Text } from '@shopify/polaris'
+import { BlockStack, Card, Collapsible, Grid, Icon, InlineStack, Text } from '@shopify/polaris'
 import React, { useCallback, useState } from 'react'
 import Pattern from './design/Pattern';
 import Marker from './design/Marker';
 import CenterDotStyle from './design/CenterDotStyle';
 import CustomMarker from './design/CustomMarker';
 import { CaretDownIcon } from '@shopify/polaris-icons';
+import TemplateComponent from './Template'
 
 const Design = () => {
 
@@ -34,6 +35,9 @@ const Design = () => {
                     <BlockStack gap={400}>
 
                         <Grid gap={400}>
+                            <Grid.Cell columnSpan={{ 'xs': 6, 'sm': 6, 'md': 3, 'lg': 4 }}>
+                                <TemplateComponent />
+                            </Grid.Cell>
                             <Grid.Cell columnSpan={{ 'xs': 6, 'sm': 6, 'md': 3, 'lg': 4 }}>
                                 <Pattern />
                             </Grid.Cell>

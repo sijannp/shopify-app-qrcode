@@ -9,10 +9,8 @@ const Settings = ({ title = '', errors }) => {
     return (
         <Card>
             <BlockStack gap={400}>
-                <Text variant='headingMd'> Settings</Text>
+                <Text variant='headingMd'>Settings</Text>
                 <FormLayout>
-
-
                     <TextField
                         value={email}
                         onChange={handleEmailChange}
@@ -59,6 +57,8 @@ const Settings = ({ title = '', errors }) => {
 
 
                 </FormLayout>
+                <input type='hidden' name='dynamic' value={true} />
+                <input type='hidden' name='is_editing' value={false} />
             </BlockStack>
         </Card>
     )

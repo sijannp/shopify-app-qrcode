@@ -9,8 +9,8 @@ const Types = ({ category, setType }) => {
                 <Text as='h2' variant='headingMd'>{title}</Text>
                 <Grid>
                     {
-                        options.map((option) => (
-                            <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 2, lg: 4, xl: 3 }}>
+                        options.map((option, index) => (
+                            <Grid.Cell key={index} columnSpan={{ xs: 6, sm: 3, md: 2, lg: 3, xl: 3 }}>
                                 <Button onClick={() => setType({ name: option.label, value: option.value })} fullWidth size='large' key={option.value}>
                                     <InlineStack blockAlign='center' gap={100}>
                                         {option.icon && <Icon source={option.icon} />}

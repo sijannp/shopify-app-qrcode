@@ -14,7 +14,7 @@ export const loader = async ({ request, params }) => {
             onFailure: async () => billing.request({
                 plan: BASIC_PLAN,
                 isTest: true,
-                returnUrl: `https://admin.shopify.com/store/${shopName}/apps/${process.env.APP_HANDLE}/app`,
+                returnUrl: `https://admin.shopify.com/store/${shopName}/apps/${process.env.SHOPIFY_APP_HANDLE}/app`,
             }),
         });
 
@@ -25,7 +25,7 @@ export const loader = async ({ request, params }) => {
             onFailure: async () => billing.request({
                 plan: PRO_PLAN,
                 isTest: true,
-                returnUrl: `https://admin.shopify.com/store/${shopName}/apps/${process.env.APP_HANDLE}/app`,
+                returnUrl: `https://admin.shopify.com/store/${shopName}/apps/${process.env.SHOPIFY_APP_HANDLE}/app`,
             }),
         });
     }
