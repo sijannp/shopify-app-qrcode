@@ -3,3 +3,22 @@
     height: auto;
 
 }
+
+input[type=color] {
+    /* Set the width and height to create a square */
+    width: 40px;
+    /* You can adjust the width and height as needed */
+    height: 40px;
+    /* Remove default browser styles */
+    border: none;
+    outline: none;
+    /* Add a 1px solid border */
+    /* border: 1px solid black; */
+    /* Ensure only the color picker is shown, not the default color input box */
+    -webkit-appearance: none;
+    appearance: none;
+    /* Ensure consistent sizing across different browsers */
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}

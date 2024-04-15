@@ -35,7 +35,6 @@ export default hsbToHex;
 
 export function hexToHsb(hex) {
 
-    console.log(hex)
     hex = hex.replace(/^#/, '');
 
     if (hex.length !== 3 && hex.length !== 6) {
@@ -122,7 +121,6 @@ export const addMissingFields = (formData) => {
     for (const key in defaultFormData) {
         if (!formData.has(key)) {
 
-            console.log('Missing key', key, defaultFormData[key])
             formData.append(key, defaultFormData[key]);
         }
     }

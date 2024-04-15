@@ -12,14 +12,12 @@ export const loader = async ({ request }) => {
     });
 
 
-    console.log(appSubscriptions[0], '---appSubscriptions[0]---')
     return { hasActivePayment, appSubscriptions };
 };
 
 const Pricing = () => {
     const { hasActivePayment, appSubscriptions } = useLoaderData();
 
-    console.log(hasActivePayment, appSubscriptions, '---hasActivePayment, appSubscriptions---')
 
 
     const plans = [

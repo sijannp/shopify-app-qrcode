@@ -58,10 +58,8 @@ const ReturnTarget = ({ type }) => {
             action: "select",
         });
 
-        console.log(collections);
 
         if (collections) {
-            console.log(collections[0])
             const { id, title, handle, image } = collections[0];
 
             setCollection({
@@ -83,7 +81,6 @@ const ReturnTarget = ({ type }) => {
         });
 
         if (products) {
-            console.log(products[0])
             const { images, id, variants, title, handle } = products[0];
 
             setFormState({

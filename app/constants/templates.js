@@ -45,7 +45,7 @@ export const templates = [
         icon: greenRedSquareIcon,
         settings: {
             colors: {
-                backcolor: "#00ff00",
+                backcolor: "#00ffff",
                 frontcolor: "#aeaeae",
                 transparent: true,
                 gradient: true,

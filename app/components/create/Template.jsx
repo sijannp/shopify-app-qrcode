@@ -5,7 +5,7 @@ import { QrCodeContext } from '../../context/qrCodeContext'
 
 const TemplateComponent = () => {
 
-    const { designData, setDesignData, colorsData, setColorsData, frameData, setFrameData, initialData } = useContext(QrCodeContext)
+    const { designData, setDesignData, setColorsData, setFrameData, initialData } = useContext(QrCodeContext)
 
 
 
@@ -13,37 +13,29 @@ const TemplateComponent = () => {
     const handleTemplateChange = (templatevalue) => {
         const template = templates.find(template => template.value === templatevalue)
 
-        // Reset Data
-        setColorsData({ ...initialData.colors })
-        setDesignData({ ...initialData.design })
-        setFrameData({ ...initialData.frame })
-
-
-        //Update Data
+        // Reset and Update Data
         const newDesignData = {
-            ...designData,
+            ...initialData.design,
             ...template.settings.design,
             template: template.value
         }
 
+
+
         const newColorsData = {
-            ...colorsData,
+            ...initialData.colors,
             ...template.settings.colors
         }
 
 
-        console.log(newColorsData, '---newColorsData---')
-        console.log(colorsData, '---colorsData---')
         const newFrameData = {
-            ...frameData,
+            ...initialData.frame,
             ...template.settings.frame
         }
 
         setDesignData(newDesignData)
         setColorsData(newColorsData)
         setFrameData(newFrameData)
-
-
 
     }
 

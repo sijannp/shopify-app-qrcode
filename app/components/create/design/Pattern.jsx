@@ -3,12 +3,10 @@ import CustomPopover from '../../PopoverWithIcons'
 const Pattern = ({ designData, setDesignData }) => {
 
     const handlePatternChange = (pattern) => {
-        console.log(pattern, '---pattern---')
         setDesignData({ ...designData, pattern })
     }
     const selectedPattern = patterns.find(pattern => pattern.value === designData.pattern) || patterns[0]
 
-    console.log(selectedPattern, '---selectedPattern---')
 
     return (
         <CustomPopover types={patterns} title='Pattern' inputName='pattern' selectedType={selectedPattern} onChange={handlePatternChange} />

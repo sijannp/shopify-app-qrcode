@@ -39,7 +39,6 @@ const Output = ({ result, isSaving, errors, qrCodeInfo }) => {
 
     const qrCode = result?.result || null;
 
-    console.log(qrCode, '---result--------------')
 
     const modalRef = useRef(null);
 
@@ -64,7 +63,6 @@ const Output = ({ result, isSaving, errors, qrCodeInfo }) => {
         //         body: JSON.stringify({ qrcode: qrCode, qrcode_info: qrCodeInfo }),
         //     });
 
-        //     console.log(response, '---response--------------')
 
         // }
 

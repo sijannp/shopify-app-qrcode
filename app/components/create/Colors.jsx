@@ -40,10 +40,13 @@ const Colors = () => {
                     <BlockStack gap={400}>
                         <Grid gap={400}>
                             <Grid.Cell columnSpan={{ 'xs': 6, 'sm': 6, 'md': 3, 'lg': 6 }}>
-                                <ColorPickerComponent label='Foreground' inputName='frontcolor' defaultColor={hexToHsb(colorsData.frontcolor)} />
+
+
+                                <ColorPickerComponent label='Foreground' inputName='frontcolor' defaultColor={colorsData.frontcolor} onChange={(color) => setColorsData({ ...colorsData, frontcolor: color })} />
+
                             </Grid.Cell>
                             <Grid.Cell columnSpan={{ 'xs': 6, 'sm': 6, 'md': 3, 'lg': 6 }}>
-                                <ColorPickerComponent label='Background' inputName='backcolor' defaultColor={hexToHsb(colorsData.backcolor)} />
+                                <ColorPickerComponent label='Background' inputName='backcolor' defaultColor={colorsData.backcolor} onChange={(color) => setColorsData({ ...colorsData, backcolor: color })} />
                             </Grid.Cell>
                         </Grid>
                         <Grid gap={400}>
@@ -73,7 +76,7 @@ const GradientComponent = ({ colorsData, setColorsData }) => {
     return (
         <Grid gap={400}>
             <Grid.Cell columnSpan={{ 'xs': 6, 'sm': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Second Color' inputName='gradient_color' defaultColor={hexToHsb(colorsData.gradient_color)} />
+                <ColorPickerComponent label='Second color' inputName='gradient_color' defaultColor={colorsData.gradientStart} onChange={(color) => setColorsData({ ...colorsData, gradientStart: color })} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'sm': 6, 'md': 3, 'lg': 6 }}>
                 <Checkbox name='radial' label='Radial Gradient' checked={colorsData.radial} onChange={() => setColorsData({ ...colorsData, radial: !colorsData.radial })} />

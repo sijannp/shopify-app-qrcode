@@ -1,9 +1,14 @@
 import { Checkbox, ColorPicker, Text, Button, InlineStack, Popover, BlockStack, Grid } from '@shopify/polaris'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import hsbToHex, { hexToHsb } from '../../../utils/Helpers'
+import { ColorPickerComponent } from '../../ColorPicker'
+import { QrCodeContext } from '../../../context/qrCodeContext'
 
-const CustomMarker = ({ designData, setDesignData }) => {
+const CustomMarker = () => {
 
+    const { designData, setDesignData } = useContext(QrCodeContext)
+
+    console.log(designData, 'designData')
 
     return (
         <BlockStack gap={400}>
@@ -24,10 +29,10 @@ const CustomMarkerOptions = ({ designData, setDesignData }) => {
             <BlockStack gap={400}>
                 <Grid gap={400}>
                     <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                        <ColorPickerComponent label='Marker Border' inputName={`${designData.different_marker_color ? '' : 'marker_out_color'}`} defaultColor={designData.marker_out_color ? hexToHsb(designData.marker_out_color) : { hue: 120, brightness: 0, saturation: 0 }} />
+                        <ColorPickerComponent label='Marker Border' inputName={`${designData.different_marker_color ? '' : 'marker_out_color'}`} defaultColor={designData.marker_out_color} onChange={(color) => setDesignData({ ...designData, marker_out_color: color })} />
                     </Grid.Cell>
                     <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                        <ColorPickerComponent label='Marker Center' inputName={`${designData.different_marker_color ? '' : 'marker_in_color'}`} defaultColor={designData.marker_in_color ? hexToHsb(designData.marker_in_color) : { hue: 120, brightness: 0, saturation: 0 }} />
+                        <ColorPickerComponent label='Marker Center' inputName={`${designData.different_marker_color ? '' : 'marker_in_color'}`} defaultColor={designData.marker_in_color} onChange={(color) => setDesignData({ ...designData, marker_in_color: color })} />
                     </Grid.Cell>
                 </Grid>
 
@@ -46,67 +51,67 @@ const DifferentMarkerColor = ({ designData, setDesignData }) => {
     return (
         <Grid gap={400}>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Top Left Border' inputName='marker_out_color' defaultColor={designData.marker_out_color ? hexToHsb(designData.marker_out_color) : { hue: 120, brightness: 0, saturation: 0 }} />
+                <ColorPickerComponent label='Top Left Border' inputName='marker_out_color' defaultColor={designData.marker_out_color} onChange={(color) => setDesignData({ ...designData, marker_out_color: color })} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Top Left Center' inputName='marker_in_color' defaultColor={designData.marker_in_color ? hexToHsb(designData.marker_in_color) : { hue: 120, brightness: 0, saturation: 0 }} />
+                <ColorPickerComponent label='Top Left Center' inputName='marker_in_color' defaultColor={designData.marker_in_color} onChange={(color) => setDesignData({ ...designData, marker_in_color: color })} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Top Right Border' inputName='marker_top_right_outline' defaultColor={designData.marker_top_right_outline ? hexToHsb(designData.marker_top_right_outline) : { hue: 120, brightness: 0, saturation: 0 }} />
+                <ColorPickerComponent label='Top Right Border' inputName='marker_top_right_outline' defaultColor={designData.marker_top_right_outline} onChange={(color) => setDesignData({ ...designData, marker_top_right_outline: color })} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Top Right Center' inputName='marker_top_right_center' defaultColor={designData.marker_top_right_center ? hexToHsb(designData.marker_top_right_center) : { hue: 120, brightness: 0, saturation: 0 }} />
+                <ColorPickerComponent label='Top Right Center' inputName='marker_top_right_center' defaultColor={designData.marker_top_right_center} onChange={(color) => setDesignData({ ...designData, marker_top_right_center: color })} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Bottom Left Border' inputName='marker_bottom_left_outline' defaultColor={designData.marker_bottom_left_outline ? hexToHsb(designData.marker_bottom_left_outline) : { hue: 120, brightness: 0, saturation: 0 }} />
+                <ColorPickerComponent label='Bottom Left Border' inputName='marker_bottom_left_outline' defaultColor={designData.marker_bottom_left_outline} onChange={(color) => setDesignData({ ...designData, marker_bottom_left_outline: color })} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Bottom Left Center' inputName='marker_bottom_left_center' defaultColor={designData.marker_bottom_left_center ? hexToHsb(designData.marker_bottom_left_center) : { hue: 120, brightness: 0, saturation: 0 }} />
+                <ColorPickerComponent label='Bottom Left Center' inputName='marker_bottom_left_center' defaultColor={designData.marker_bottom_left_center} onChange={(color) => setDesignData({ ...designData, marker_bottom_left_center: color })} />
             </Grid.Cell>
         </Grid>
     )
 }
 
 
-const ColorPickerComponent = ({ label, inputName, defaultColor }) => {
+// const ColorPickerComponent = ({ label, inputName, defaultColor }) => {
 
-    if (!defaultColor) defaultColor = { hue: 120, brightness: 0, saturation: 0 }
+//     if (!defaultColor) defaultColor = { hue: 120, brightness: 0, saturation: 0 }
 
-    const [color, setColor] = useState(defaultColor);
-    const [popoverActive, setPopoverActive] = useState(false);
+//     const [color, setColor] = useState(defaultColor);
+//     const [popoverActive, setPopoverActive] = useState(false);
 
-    const togglePopoverActive = useCallback(
-        () => setPopoverActive((popoverActive) => !popoverActive),
-        [],
-    );
+//     const togglePopoverActive = useCallback(
+//         () => setPopoverActive((popoverActive) => !popoverActive),
+//         [],
+//     );
 
 
 
-    const activator = (
-        <Button onClick={togglePopoverActive} variant='monochromePlain'   >
-            <InlineStack blockAlign='center' gap={300}>
-                <div style={{ backgroundColor: hsbToHex(color.hue, color.saturation, color.brightness), width: '40px', height: '40px', borderRadius: '4px' }}></div>
-                <BlockStack align='start' inlineAlign='start'>
-                    <Text as='h2' variant='bodyMd'>{label}</Text>
-                    <Text> {hsbToHex(color.hue, color.saturation, color.brightness)} </Text>
-                </BlockStack>
+//     const activator = (
+//         <Button onClick={togglePopoverActive} variant='monochromePlain'   >
+//             <InlineStack blockAlign='center' gap={300}>
+//                 <div style={{ backgroundColor: hsbToHex(color.hue, color.saturation, color.brightness), width: '40px', height: '40px', borderRadius: '4px' }}></div>
+//                 <BlockStack align='start' inlineAlign='start'>
+//                     <Text as='h2' variant='bodyMd'>{label}</Text>
+//                     <Text> {hsbToHex(color.hue, color.saturation, color.brightness)} </Text>
+//                 </BlockStack>
 
-            </InlineStack>
+//             </InlineStack>
 
-        </Button>
-    );
-    return (
-        <>
-            <Popover
-                active={popoverActive}
-                activator={activator}
-                autofocusTarget="first-node"
-                onClose={togglePopoverActive}
-            >
-                <ColorPicker onChange={setColor} color={color} />
+//         </Button>
+//     );
+//     return (
+//         <>
+//             <Popover
+//                 active={popoverActive}
+//                 activator={activator}
+//                 autofocusTarget="first-node"
+//                 onClose={togglePopoverActive}
+//             >
+//                 <ColorPicker onChange={setColor} color={color} />
 
-            </Popover>
-            {inputName && <input type='hidden' name={inputName} value={hsbToHex(color.hue, color.saturation, color.brightness)} />}
-        </>
-    )
-}
+//             </Popover>
+//             {inputName && <input type='hidden' name={inputName} value={hsbToHex(color.hue, color.saturation, color.brightness)} />}
+//         </>
+//     )
+// }

@@ -38,12 +38,10 @@ const ScansData = () => {
                 });
 
                 if (!response.ok) {
-                    console.log(response, 'response--------')
                     throw new Error('Network response was not ok');
                 }
 
                 const data = await response.json();
-                console.log('Response data:', data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

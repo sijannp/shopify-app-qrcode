@@ -7,7 +7,6 @@ import { getDestinationUrl } from "../models/QRCode.server";
 export const loader = async ({ params, request }) => {
 
 
-    console.log(request.headers, '---request.headers--------------');
     // [START validate]
 
     invariant(params.id, "Could not find QR code destination");
@@ -15,7 +14,6 @@ export const loader = async ({ params, request }) => {
     const id = Number(params.id);
     const qrCode = await db.qRCode.findFirst({ where: { id } });
 
-    console.log(qrCode, '---qrCode--------------')
 
     // invariant(qrCode, "Could not find QR code destination");
     // [END validate]

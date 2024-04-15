@@ -30,7 +30,6 @@ export async function loader({ request }) {
 
 //   const formData = await request.formData();
 
-//   console.log(formData, '---formData--------------')
 
 //   if (formData) {
 
@@ -73,7 +72,6 @@ export async function loader({ request }) {
 // const qrCode = await db.qRCode.create({ data })
 //
 //
-// console.log(qrCode.id, '---qrCode.id--------------')
 // return json({ qrCode: await getQRCode(Number(qrCode.id), admin.graphql) });
 
 // }
@@ -102,7 +100,6 @@ const Create = () => {
     }
 
     setErrors(newErrors);
-    console.log(errors, '---errors--------------')
     return Object.keys(newErrors).length === 0;
   };
   // End Form Validation
@@ -177,7 +174,6 @@ const Create = () => {
       for (const key in defaultFormData) {
         if (!formData.has(key)) {
 
-          console.log('Missing key', key, defaultFormData[key])
           formData.append(key, defaultFormData[key]);
         }
       }

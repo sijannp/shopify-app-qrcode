@@ -141,7 +141,7 @@ const AdditionalFrameSettings = ({ frameData, setFrameData }) => {
             <Checkbox name='custom_frame_color' label='Custom Frame Color' value={frameData.custom_frame_color} checked={frameData.custom_frame_color} onChange={(value) => setFrameData({ ...frameData, custom_frame_color: value })} />
             {frameData.custom_frame_color &&
 
-                <ColorPickerComponent label='Frame Color' inputName='framecolor' defaultColor={hexToHsb(frameData.framecolor)} />
+                <ColorPickerComponent label='Frame Color' inputName='framecolor' defaultColor={frameData.framecolor} onChange={(value) => setFrameData({ ...frameData, framecolor: value })} />
             }
 
 
