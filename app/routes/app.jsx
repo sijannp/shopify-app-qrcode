@@ -23,6 +23,7 @@ export default function App() {
           Home
         </Link>
         <Link to="/app/create">Create</Link>
+        <Link to="/app/templates">Templates</Link>
         <Link to="/app/pricing">Plans</Link>
       </ui-nav-menu>
       <Outlet />

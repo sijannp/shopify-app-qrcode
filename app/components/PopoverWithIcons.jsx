@@ -2,9 +2,8 @@ import React, { useCallback, useState } from 'react'
 import { Card, BlockStack, Text, Avatar, InlineStack, Button, Popover } from '@shopify/polaris'
 
 
-const CustomPopover = ({ types, title, inputName }) => {
+const CustomPopover = ({ types, title, inputName, selectedType, onChange }) => {
 
-    const [selectedType, setselectedType] = useState(types[0])
 
     const [popoverActive, setPopoverActive] = useState(false);
 
@@ -50,7 +49,7 @@ const CustomPopover = ({ types, title, inputName }) => {
                         <InlineStack wrap={true} gap={600} align='center'>
 
                             {types.map((type, index) => (
-                                <Button tone='success' variant={`${selectedType.value == type.value ? 'plain' : 'monochromePlain'}`} key={index} onClick={() => { setselectedType(type); setPopoverActive(false) }}>
+                                <Button tone='success' variant={`${selectedType.value == type.value ? 'plain' : 'monochromePlain'}`} key={index} onClick={() => { onChange(type.value); togglePopoverActive(false) }}>
                                     <Card key={type.id} background={`${selectedType.value == type.value ? 'bg-fill-success-secondary' : ''}`}>
                                         <BlockStack gap={400}>
                                             <Avatar source={type.icon} size='lg' />

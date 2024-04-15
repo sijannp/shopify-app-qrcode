@@ -2,11 +2,11 @@ import React, { useState, useCallback } from 'react';
 import { DropZone, Thumbnail, Text, Card, BlockStack, InlineStack, Icon, Collapsible } from '@shopify/polaris';
 import { NoteIcon, CaretDownIcon } from '@shopify/polaris-icons';
 
-export default function Logo() {
+export default function Logo({ values }) {
     const [open, setOpen] = useState(true);
     const handleToggle = useCallback(() => setOpen((open) => !open), []);
 
-    const [file, setFile] = useState();
+    const [file, setFile] = useState(values);
     const [base64String, setBase64String] = useState();
 
     const handleDropZoneDrop = useCallback(

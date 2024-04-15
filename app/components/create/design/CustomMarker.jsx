@@ -1,15 +1,14 @@
 import { Checkbox, ColorPicker, Text, Button, InlineStack, Popover, BlockStack, Grid } from '@shopify/polaris'
 import React, { useCallback, useState } from 'react'
-import hsbToHex from '../../../utils/Helpers'
+import hsbToHex, { hexToHsb } from '../../../utils/Helpers'
 
-const CustomMarker = () => {
+const CustomMarker = ({ designData, setDesignData }) => {
 
-    const [customMarkersColor, setCustomMarkersColor] = useState(false)
 
     return (
         <BlockStack gap={400}>
-            <Checkbox name='markers_color' label='Custom markers color' checked={customMarkersColor} onChange={() => setCustomMarkersColor(!customMarkersColor)} />
-            {customMarkersColor && <CustomMarkerOptions />}
+            <Checkbox name='markers_color' label='Custom markers color' checked={designData.markers_color} onChange={() => setDesignData({ ...designData, markers_color: !designData.markers_color })} />
+            {designData.markers_color && <CustomMarkerOptions designData={designData} setDesignData={setDesignData} />}
         </BlockStack>
     )
 }
@@ -17,26 +16,25 @@ const CustomMarker = () => {
 export default CustomMarker
 
 
-const CustomMarkerOptions = () => {
+const CustomMarkerOptions = ({ designData, setDesignData }) => {
 
-    const [differentMarkerColor, setDifferentMarkerColor] = useState(false)
 
     return (
         <>
             <BlockStack gap={400}>
                 <Grid gap={400}>
                     <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                        <ColorPickerComponent label='Marker Border' inputName={`${differentMarkerColor ? '' : 'marker_out_color'}`} />
+                        <ColorPickerComponent label='Marker Border' inputName={`${designData.different_marker_color ? '' : 'marker_out_color'}`} defaultColor={designData.marker_out_color ? hexToHsb(designData.marker_out_color) : { hue: 120, brightness: 0, saturation: 0 }} />
                     </Grid.Cell>
                     <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                        <ColorPickerComponent label='Marker Center' inputName={`${differentMarkerColor ? '' : 'marker_in_color'}`} />
+                        <ColorPickerComponent label='Marker Center' inputName={`${designData.different_marker_color ? '' : 'marker_in_color'}`} defaultColor={designData.marker_in_color ? hexToHsb(designData.marker_in_color) : { hue: 120, brightness: 0, saturation: 0 }} />
                     </Grid.Cell>
                 </Grid>
 
 
                 <BlockStack gap={400}>
-                    <Checkbox name='different_marker_color' label='Different marker color' checked={differentMarkerColor} onChange={() => setDifferentMarkerColor(!differentMarkerColor)} />
-                    {differentMarkerColor && <DifferentMarkerColor />}
+                    <Checkbox name='different_marker_color' label='Different marker color' checked={designData.different_marker_color} onChange={() => setDesignData({ ...designData, different_marker_color: !designData.different_marker_color })} />
+                    {designData.different_marker_color && <DifferentMarkerColor designData={designData} setDesignData={setDesignData} />}
                 </BlockStack>
             </BlockStack>
         </>
@@ -44,26 +42,26 @@ const CustomMarkerOptions = () => {
 }
 
 
-const DifferentMarkerColor = () => {
+const DifferentMarkerColor = ({ designData, setDesignData }) => {
     return (
         <Grid gap={400}>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Top Left Border' inputName='marker_out_color' />
+                <ColorPickerComponent label='Top Left Border' inputName='marker_out_color' defaultColor={designData.marker_out_color ? hexToHsb(designData.marker_out_color) : { hue: 120, brightness: 0, saturation: 0 }} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Top Left Center' inputName='marker_in_color' />
+                <ColorPickerComponent label='Top Left Center' inputName='marker_in_color' defaultColor={designData.marker_in_color ? hexToHsb(designData.marker_in_color) : { hue: 120, brightness: 0, saturation: 0 }} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Top Right Border' inputName='marker_top_right_outline' />
+                <ColorPickerComponent label='Top Right Border' inputName='marker_top_right_outline' defaultColor={designData.marker_top_right_outline ? hexToHsb(designData.marker_top_right_outline) : { hue: 120, brightness: 0, saturation: 0 }} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Top Right Center' inputName='marker_top_right_center' />
+                <ColorPickerComponent label='Top Right Center' inputName='marker_top_right_center' defaultColor={designData.marker_top_right_center ? hexToHsb(designData.marker_top_right_center) : { hue: 120, brightness: 0, saturation: 0 }} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Bottom Left Border' inputName='marker_bottom_left_outline' />
+                <ColorPickerComponent label='Bottom Left Border' inputName='marker_bottom_left_outline' defaultColor={designData.marker_bottom_left_outline ? hexToHsb(designData.marker_bottom_left_outline) : { hue: 120, brightness: 0, saturation: 0 }} />
             </Grid.Cell>
             <Grid.Cell columnSpan={{ 'xs': 6, 'md': 3, 'lg': 6 }}>
-                <ColorPickerComponent label='Bottom Left Center' inputName='marker_bottom_left_center' />
+                <ColorPickerComponent label='Bottom Left Center' inputName='marker_bottom_left_center' defaultColor={designData.marker_bottom_left_center ? hexToHsb(designData.marker_bottom_left_center) : { hue: 120, brightness: 0, saturation: 0 }} />
             </Grid.Cell>
         </Grid>
     )

@@ -8,6 +8,8 @@ export const ColorPickerComponent = ({ label, inputName, defaultColor }) => {
     if (!defaultColor) defaultColor = { hue: 120, brightness: 0, saturation: 0 }
 
     const [color, setColor] = useState(defaultColor);
+
+    console.log(defaultColor, '---defaultColor---')
     const [popoverActive, setPopoverActive] = useState(false);
 
     const togglePopoverActive = useCallback(

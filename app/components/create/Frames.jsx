@@ -1,14 +1,21 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { Card, BlockStack, Text, InlineStack, Button, Collapsible, TextField, Popover, Checkbox, Select, Icon } from '@shopify/polaris'
 import { CaretDownIcon } from '@shopify/polaris-icons';
 import { frames } from '../../constants/frames';
 import { ColorPickerComponent } from '../ColorPicker';
+import { hexToHsb } from '../../utils/Helpers';
+import { QrCodeContext } from '../../context/qrCodeContext';
 
 
 const Frames = () => {
+
+    const { frameData, setFrameData } = useContext(QrCodeContext);
+
+
+    const selectedFrame = frames.find(frame => frame.value === frameData.outer_frame) || frames[0];
+
     const [open, setOpen] = useState(true);
 
-    const [selectedFrame, setSelectedFrame] = useState(frames[0])
 
 
     const [popoverActive, setPopoverActive] = useState(false);
@@ -76,8 +83,8 @@ const Frames = () => {
                             <Card>
                                 <InlineStack wrap={true} gap={600} align='center'>
 
-                                    {frames.map((frame) => (
-                                        <Button tone='success' variant={`${selectedFrame.value == frame.value ? 'plain' : 'monochromePlain'}`} key={frame.id} onClick={() => { setSelectedFrame(frame); setOpen(false) }}>
+                                    {frames.map((frame, index) => (
+                                        <Button tone='success' variant={`${selectedFrame.value == frame.value ? 'plain' : 'monochromePlain'}`} key={index} onClick={() => { setFrameData({ ...frameData, outer_frame: frame.value }); togglePopoverActive(false) }}>
                                             <Card key={frame.id}>
                                                 <BlockStack gap={400}>
                                                     <img style={{ width: '40px', height: 'auto' }} src={frame.icon} />
@@ -90,7 +97,7 @@ const Frames = () => {
                             </Card>
                         </Popover>
 
-                        {selectedFrame.value !== 'none' && <AdditionalFrameSettings />}
+                        {selectedFrame.value !== 'none' && <AdditionalFrameSettings frameData={frameData} setFrameData={setFrameData} />}
                     </BlockStack>
                 </Collapsible>
                 <input type='hidden' name='outer_frame' value={selectedFrame.value} />
@@ -103,15 +110,14 @@ const Frames = () => {
 export default Frames
 
 
-const AdditionalFrameSettings = () => {
+const AdditionalFrameSettings = ({ frameData, setFrameData }) => {
 
-    const [customFrameColor, setCustomFrameColor] = useState(false)
-    const [framelabel, setFrameLabel] = useState('Scan Me!')
 
-    const [selectedFont, setSelectedFont] = useState('Arial, Helvetica, sans-serif');
 
     const handleSelectChange = useCallback(
-        (value) => setSelectedFont(value),
+        (value) => {
+            setFrameData({ ...frameData, frame_font: value });
+        },
         [],
     );
 
@@ -124,18 +130,18 @@ const AdditionalFrameSettings = () => {
 
     return (
         <BlockStack gap={400}>
-            <TextField name='framelabel' label='Frame Label' type='text' value={framelabel} onChange={(value) => setFrameLabel(value)} />
+            <TextField name='framelabel' label='Frame Label' type='text' value={frameData.framelabel} onChange={(value) => setFrameData({ ...frameData, framelabel: value })} />
 
             <Select
                 label="Label Font"
                 options={fontOptions}
                 onChange={handleSelectChange}
-                value={selectedFont}
+                value={frameData.frame_font}
             />
-            <Checkbox name='custom_frame_color' label='Custom Frame Color' checked={customFrameColor} value={customFrameColor} onChange={() => setCustomFrameColor(!customFrameColor)} />
-            {customFrameColor &&
+            <Checkbox name='custom_frame_color' label='Custom Frame Color' value={frameData.custom_frame_color} checked={frameData.custom_frame_color} onChange={(value) => setFrameData({ ...frameData, custom_frame_color: value })} />
+            {frameData.custom_frame_color &&
 
-                <ColorPickerComponent label='Frame Color' inputName='framecolor' />
+                <ColorPickerComponent label='Frame Color' inputName='framecolor' defaultColor={hexToHsb(frameData.framecolor)} />
             }
 
 

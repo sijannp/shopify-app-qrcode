@@ -13,6 +13,7 @@ import Colors from '../components/create/Colors';
 import Frames from '../components/create/Frames';
 import outputStyles from '../styles/output.css?url'
 import Logo from '../components/create/Logo';
+import { QrCodeProvider } from '../context/qrCodeContext';
 
 
 export async function loader({ request }) {
@@ -201,10 +202,41 @@ const Create = () => {
     } else {
     }
     setIsSaving(false);
-
-
   };
 
+
+  const initialData = {
+    colors: {
+      backcolor: "#FFFFFF",
+      frontcolor: "#000000",
+      transparent: false,
+      gradient: false,
+      radial: false,
+      gradient_color: "#000000",
+    },
+    design: {
+      pattern: "circle",
+      marker: "circle",
+      template: 'circle',
+      marker_in: "circle",
+      markers_color: false,
+      different_marker_color: false,
+      marker_out_color: "#000000",
+      marker_in_color: "#000000",
+      marker_top_right_outline: "#000000",
+      marker_top_right_center: "#000000",
+      marker_bottom_left_outline: "#000000",
+      marker_bottom_left_center: "#000000",
+    },
+    frame: {
+      outer_frame: 'none',
+      framelabel: 'Scan Me!',
+      custom_frame_color: false,
+      custom_frame_color: false,
+      framecolor: '#000000',
+      frame_font: 'Arial, Helvetica, sans-serif'
+    }
+  }
 
 
 
@@ -218,33 +250,35 @@ const Create = () => {
       </BlockStack>
       {
         selectedType ?
-          <Form method='post' ref={formRef} onSubmit={handleSubmit} >
-            <BlockStack gap={400}>
-              <Button size='large' tone='critical' variant='monochromePlain'>
-                <InlineStack align='center' blockAlign='center'>
+          <QrCodeProvider initialData={initialData}>
+            <Form method='post' ref={formRef} onSubmit={handleSubmit} >
+              <BlockStack gap={400}>
+                <Button size='large' tone='critical' variant='monochromePlain'>
+                  <InlineStack align='center' blockAlign='center'>
 
-                </InlineStack>
-              </Button>
-              <Type type={selectedType} setType={setSelectedType} />
-              <Grid>
-                <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 4, lg: 8, xl: 8 }}>
+                  </InlineStack>
+                </Button>
+                <Type type={selectedType} setType={setSelectedType} />
+                <Grid>
+                  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 4, lg: 8, xl: 8 }}>
 
-                  <BlockStack gap={400}>
-                    <Settings errors={errors} />
-                    <Target type={selectedType} errors={errors} />
-                    <Colors />
-                    <Design />
-                    <Frames />
-                    <Logo />
-                    {/* <Generate /> */}
-                  </BlockStack>
-                </Grid.Cell>
-                <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 2, lg: 4, xl: 4 }} >
-                  <Output type={selectedType} qrCodeInfo={qrCodeInfo} result={result} isSaving={isSaving} errors={errors} />
-                </Grid.Cell>
-              </Grid>
-            </BlockStack>
-          </Form>
+                    <BlockStack gap={400}>
+                      <Settings errors={errors} />
+                      <Target type={selectedType} errors={errors} />
+                      <Colors />
+                      <Design />
+                      <Frames />
+                      <Logo />
+                      {/* <Generate /> */}
+                    </BlockStack>
+                  </Grid.Cell>
+                  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 2, lg: 4, xl: 4 }} >
+                    <Output type={selectedType} qrCodeInfo={qrCodeInfo} result={result} isSaving={isSaving} errors={errors} />
+                  </Grid.Cell>
+                </Grid>
+              </BlockStack>
+            </Form>
+          </QrCodeProvider>
 
 
           : <SelectType setType={setSelectedType} />

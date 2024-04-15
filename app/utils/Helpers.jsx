@@ -31,3 +31,103 @@ function hsbToHex(hue, saturation, brightness) {
 }
 
 export default hsbToHex;
+
+
+export function hexToHsb(hex) {
+
+    console.log(hex)
+    hex = hex.replace(/^#/, '');
+
+    if (hex.length !== 3 && hex.length !== 6) {
+        throw new Error('Invalid hex string');
+    }
+
+    const rgb = hex.match(/.{1,2}/g).map(x => parseInt(x, 16));
+    const r = rgb[0] / 255;
+    const g = rgb[1] / 255;
+    const b = rgb[2] / 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const delta = max - min;
+
+    let hue = 0;
+    if (delta === 0) {
+        hue = 0; // No color
+    } else if (max === r) {
+        hue = ((g - b) / delta) % 6;
+    } else if (max === g) {
+        hue = (b - r) / delta + 2;
+    } else {
+        hue = (r - g) / delta + 4;
+    }
+
+    hue = Math.round(hue * 60);
+    if (hue < 0) hue += 360;
+
+    const saturation = delta === 0 ? 0 : delta / max;
+    const brightness = max;
+
+    return { hue, saturation, brightness };
+}
+
+
+export const validateForm = (formData) => {
+    const newErrors = {};
+
+    if (!formData.get("title") || formData.get("title").trim() === "") {
+        newErrors.name = "Title is required";
+    }
+
+
+    if (!formData.get("section") || formData.get("section").trim() === "") {
+        newErrors.link = "Section is required";
+    }
+
+
+    return Object.keys(newErrors).length === 0;
+};
+
+
+export const addMissingFields = (formData) => {
+    const defaultFormData = {
+        backcolor: "#FFFFFF",
+        frontcolor: "#000000",
+        gradient_color: "#000000",
+        pattern: "special-circle",
+        marker: "default",
+        marker_in: "default",
+        marker_out_color: "#000000",
+        marker_in_color: "#000000",
+        marker_top_right_outline: "#000000",
+        marker_top_right_center: "#000000",
+        marker_bottom_left_outline: "#000000",
+        marker_bottom_left_center: "#000000",
+        optionlogo: "none",
+        no_logo_bg: "",
+        outer_frame: "none",
+        framelabel: "SCAN ME",
+        label_font: "Arial, Helvetica, sans-serif",
+        framecolor: "#000000",
+        size: 24,
+        level: "M",
+        imagePreview: "",
+        link: "http://app.qodevault.com",
+        section: "#link",
+        title: "Test QR Code",
+        dynamic: true,
+        is_editing: false
+    }
+
+    for (const key in defaultFormData) {
+        if (!formData.has(key)) {
+
+            console.log('Missing key', key, defaultFormData[key])
+            formData.append(key, defaultFormData[key]);
+        }
+    }
+
+    return formData;
+
+
+}
